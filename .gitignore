@@ -1,0 +1,15 @@
+data/*
+!data/.gitkeep
+.test-data/
+__pycache__/
+*.pyc
+tools/platform-tools/
+*.zip
+
+.test-launcher/
+*.keystore
+*.pk8
+*.pem
+adbkey
+adbkey.pub
+config.properties

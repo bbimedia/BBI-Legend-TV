@@ -1,0 +1,21 @@
+{
+  "company": {
+    "name": "BBI MEDIA",
+    "tagline": "Kết nối công nghệ. Khuếch đại thương hiệu.",
+    "taglineEn": "Connect Technology. Amplify Brands.",
+    "kind": "Digital Media & Technology Agency",
+    "hotline": "0963 146 653",
+    "email": "info@bbimedia.vn",
+    "website": "bbimedia.vn"
+  },
+  "community": {
+    "zalo": "https://zalo.me/g/lz86cu6fnk7orfml6mmk",
+    "facebook": "https://www.facebook.com/groups/toilaviber",
+    "name": "Tôi là Vibe'r"
+  },
+  "donation": {
+    "account": "0301000113030",
+    "holder": "Ho Kinh Doanh BBI MEDIA",
+    "bank": "Ngân hàng TMCP An Bình (ABBANK)"
+  }
+}

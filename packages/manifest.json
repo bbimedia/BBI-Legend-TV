@@ -1,0 +1,13 @@
+{
+  "modified": true,
+  "version": "1.1-studio",
+  "sha256": "30ddadc090a2e4bfac31507caba98c5c3907912132367aa7eb50e48ffe53b536",
+  "min_sdk": 28,
+  "source": "https://github.com/simbasjungles/free-my-tv",
+  "themes": [
+    "default",
+    "xp",
+    "vista",
+    "macos"
+  ]
+}
