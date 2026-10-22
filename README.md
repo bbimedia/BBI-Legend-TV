@@ -126,7 +126,7 @@ Cảm ơn bạn rất nhiều!
 
 **Kết nối công nghệ. Khuếch đại thương hiệu.**
 
-[bbimedia.vn](https://bbimedia.vn) · [info@bbimedia.vn](mailto:info@bbimedia.vn) · Hotline: **0963 146 653**
+[bbimedia.vn](https://bbimedia.vn) · [info@bbimedia.vn](mailto:info@bbimedia.vn)
 
 ## Giấy phép
 
