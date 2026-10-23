@@ -1,7 +1,7 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.3.1';
+  const VERSION = '1.3.2';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
     ['◈','Năm diện mạo','Free My TV mặc định, XP, XP Widgets, Vista và macOS trong cùng một bản cài.'],
@@ -11,6 +11,7 @@
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.3.2',date:'23/10/2026',title:'Nền cài đặt đồng bộ theo theme',highlights:[{title:'Giao diện cài đặt',desc:'Dùng chung nền với màn hình chính; bổ sung VietQR ủng hộ BBI MEDIA ở cột trái.'},{title:'Credit và miễn trừ',desc:'Hiển thị nguồn gốc, đơn vị phát triển và lưu ý tương thích, hình ảnh, nhãn hiệu ở cuối màn hình.'}]},
     {version:'v1.3.1',date:'23/10/2026',title:'Lịch Bongda24h & nhận diện BBI Legend TV trên launcher',highlights:[
       {title:'Lịch bóng đá và kênh phát từ Bongda24h',desc:'Đọc lịch 7 ngày của trang nguồn, giữ giờ Việt Nam và tên kênh từng trận, ưu tiên Việt Nam. Làm mới thủ công và giữ bản lưu khi mất mạng hoặc cấu trúc trang đổi.'},
       {title:'Cài đặt launcher mang tên BBI Legend TV',desc:'Cập nhật tên app, logo BBI MEDIA, màn hình cài đặt và nhãn dịch vụ. Giữ một dòng ghi nguồn Free My TV / MIT ở cuối trang cài đặt.'},

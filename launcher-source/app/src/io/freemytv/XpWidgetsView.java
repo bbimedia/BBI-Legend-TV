@@ -133,5 +133,5 @@ final class XpWidgetsView extends FrameLayout {
         }
     }
     /** Original vector hills and clouds; no Microsoft wallpaper assets. */
-    private final class Landscape extends View {private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);Landscape(Activity a){super(a);}protected void onDraw(Canvas c){float w=getWidth(),h=getHeight();p.setShader(new LinearGradient(0,0,0,h,0xff1866b7,0xffa6d8f5,Shader.TileMode.CLAMP));c.drawRect(0,0,w,h,p);p.setShader(null);p.setColor(0x44ffffff);c.drawOval(.6f*w,.03f*h,.94f*w,.1f*h,p);Path hill=new Path();hill.moveTo(0,h*.7f);hill.cubicTo(w*.35f,h*.45f,w*.65f,h*.6f,w,h*.72f);hill.lineTo(w,h);hill.lineTo(0,h);hill.close();p.setShader(new LinearGradient(0,h*.6f,0,h,0xff6caa35,0xff2e7020,Shader.TileMode.CLAMP));c.drawPath(hill,p);p.setShader(null);}}
+    private final class Landscape extends View {private final ThemeWallpaper shared=new ThemeWallpaper();private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);Landscape(Activity a){super(a);}protected void onDraw(Canvas c){shared.draw(c,"xp-widgets",getWidth(),getHeight());}}
 }

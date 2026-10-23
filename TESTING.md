@@ -1,5 +1,12 @@
 # Verification
 
+## v1.3.2 — Cài đặt theo theme, donate và credit
+
+- Biên dịch và xác minh chữ ký APK; 21 kiểm thử Python và bộ kiểm thử thông báo cập nhật Node đều qua.
+- Cài trên Xiaomi MiTV-MOOR2 / Android 11, tạo backup trước nâng cấp và giữ cấu hình hiện có.
+- Kiểm tra ảnh chụp thật ở theme XP Widgets: nền xanh/đồi đồng bộ, donate ở cột trái, credit và hai dòng miễn trừ không chồng lên menu. Chưa thử quét QR thanh toán; không thực hiện giao dịch.
+- Dùng chung bộ vẽ nền cho XP, XP Widgets, Vista và macOS; mặc định giữ nền Scene. Các theme còn lại đã biên dịch, chưa kiểm tra ảnh trên TV trong lượt này.
+
 - Backend: 20 automated tests pass on Windows/Python 3.14. They cover LAN-address validation, malformed settings, service protection, preserving other accessibility services, refusing incomplete split-APK backups, refusing cross-device/tampered restores, job serialization, CRLF getprop output, Xiaomi screenshot-driver prefixes, session token, Host/Origin, CSP and path traversal.
 - JavaScript syntax checked with Node. Python modules compile. Android APK compiled and signature verified before packaging.
 - Live Xiaomi MiTV-MOOR2 / Android 11: connect/read compatibility, install with a pre-install backup, export current settings, switch to Vista, back up APK + managed settings, switch to macOS, restore Vista from backup, then return TV to macOS. Existing sounds and triple-Home settings retained.

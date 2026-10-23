@@ -121,7 +121,7 @@ Nguồn và tài liệu: [Open-Meteo](https://open-meteo.com/en/docs), [Lịch B
 
 ## Nhận diện trên launcher
 
-Tên ứng dụng, logo trong cài đặt, lựa chọn màn hình Home và nhãn dịch vụ mang thương hiệu **BBI Legend TV / BBI MEDIA**. Cuối màn hình cài đặt có một dòng ghi nguồn `github.com/simbasjungles/free-my-tv · MIT`. Giữ nguyên package/component Android để cập nhật cùng chữ ký và giữ dữ liệu; các file giấy phép và ghi công nguồn gốc vẫn có trong repo.
+Tên ứng dụng, logo trong cài đặt, lựa chọn màn hình Home và nhãn dịch vụ mang thương hiệu **BBI Legend TV / BBI MEDIA**. Nền cài đặt đồng bộ với theme màn hình chính; cột trái có VietQR và thông tin ủng hộ BBI MEDIA. Cuối màn hình ghi `Mã nguồn gốc: @free-my-tv - MIT - Phát triển: BBIMedia.VN`, bên dưới là miễn trừ trách nhiệm về tương thích, dữ liệu tham khảo và quyền hình ảnh/nhãn hiệu. Giữ nguyên package/component Android để cập nhật cùng chữ ký và giữ dữ liệu; các file giấy phép và ghi công nguồn gốc vẫn có trong repo.
 
 ## Thông báo phiên bản mới
 

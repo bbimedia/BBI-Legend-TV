@@ -117,15 +117,10 @@ final class VistaHomeView extends android.widget.FrameLayout {
         protected void onDraw(Canvas c){float x=getWidth()/2f,y=getHeight()/2f,r=Math.min(x,y)*0.84f;p.setColor(0xff172a36);c.drawCircle(x,y,r+s(4),p);p.setColor(0xfff0f4f5);c.drawCircle(x,y,r,p);p.setColor(0xff263b49);p.setStrokeWidth(s(2));for(int i=0;i<12;i++){double angle=i*Math.PI/6;c.drawLine(x+(float)Math.sin(angle)*r*.84f,y-(float)Math.cos(angle)*r*.84f,x+(float)Math.sin(angle)*r*.95f,y-(float)Math.cos(angle)*r*.95f,p);}Calendar now=Calendar.getInstance();double hour=(now.get(Calendar.HOUR)+now.get(Calendar.MINUTE)/60.0)*Math.PI/6,minute=now.get(Calendar.MINUTE)*Math.PI/30;p.setStrokeWidth(s(5));c.drawLine(x,y,x+(float)Math.sin(hour)*r*.49f,y-(float)Math.cos(hour)*r*.49f,p);p.setStrokeWidth(s(3));c.drawLine(x,y,x+(float)Math.sin(minute)*r*.72f,y-(float)Math.cos(minute)*r*.72f,p);p.setColor(0xff268cb0);c.drawCircle(x,y,s(5),p);postInvalidateDelayed(30000);}
     }
     /** Vector aurora wallpaper, independent of any external image. */
-    private final class Wallpaper extends View {
+    private final class Wallpaper extends View {private final ThemeWallpaper shared=new ThemeWallpaper();
         private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);private final Path ribbon=new Path();
         Wallpaper(Activity a){super(a);}
-        protected void onDraw(Canvas c){c.save();c.scale(getWidth()/1280f,getHeight()/720f);
-            p.setShader(new LinearGradient(0,0,1100,720,new int[]{0xff061226,0xff124959,0xff1c6380,0xff070e25},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
-            p.setShader(new RadialGradient(950,365,650,new int[]{0x885dd1ba,0x3343a3bb,0},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
-            ribbon.reset();ribbon.moveTo(-100,730);ribbon.cubicTo(350,650,460,180,1380,80);ribbon.cubicTo(890,230,720,550,1280,670);ribbon.lineTo(1280,820);ribbon.close();p.setShader(new LinearGradient(300,700,1000,150,new int[]{0x003fb9ee,0x7743b8e5,0x4478d5b1,0x0055cdaf},null,Shader.TileMode.CLAMP));c.drawPath(ribbon,p);
-            ribbon.reset();ribbon.moveTo(-60,675);ribbon.cubicTo(350,640,650,245,1370,140);p.setShader(null);p.setColor(0x5587e6f9);p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(2);c.drawPath(ribbon,p);
-            ribbon.reset();ribbon.moveTo(220,780);ribbon.cubicTo(500,490,750,440,1320,570);p.setColor(0x335beab8);p.setStrokeWidth(3);c.drawPath(ribbon,p);p.setStyle(Paint.Style.FILL);c.restore();}
+        protected void onDraw(Canvas c){shared.draw(c,"vista",getWidth(),getHeight());}
     }
 }
 

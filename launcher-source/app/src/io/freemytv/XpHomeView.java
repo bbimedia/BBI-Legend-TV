@@ -105,14 +105,10 @@ final class XpHomeView extends android.widget.FrameLayout {
     boolean onKey(KeyEvent e){int key=e.getKeyCode();if(key==KeyEvent.KEYCODE_DPAD_UP||key==KeyEvent.KEYCODE_DPAD_DOWN||key==KeyEvent.KEYCODE_DPAD_LEFT||key==KeyEvent.KEYCODE_DPAD_RIGHT){navigationKey=e.getAction()==KeyEvent.ACTION_DOWN;return false;}navigationKey=false;if(e.getKeyCode()==KeyEvent.KEYCODE_BACK||e.getKeyCode()==KeyEvent.KEYCODE_MENU){if(e.getAction()==KeyEvent.ACTION_DOWN&&e.getRepeatCount()==0)toggleStart();return true;}return false;}
 
     /** Original vector landscape: cached by Android's display list, no per-frame allocations. */
-    private final class Wallpaper extends View {
+    private final class Wallpaper extends View {private final ThemeWallpaper shared=new ThemeWallpaper();
         private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);private final Path hill=new Path();
         Wallpaper(Activity a){super(a);}
-        protected void onDraw(Canvas c){float w=getWidth(),h=getHeight();c.save();c.scale(w/1280f,h/720f);
-            p.setShader(new LinearGradient(0,0,0,500,new int[]{0xff0860bb,0xff58afea,0xffc2e4fa},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);p.setShader(null);
-            p.setColor(0x99ffffff);c.drawOval(720,100,1060,145,p);c.drawOval(810,75,990,145,p);c.drawOval(930,105,1165,148,p);p.setColor(0x77ffffff);c.drawOval(250,173,500,201,p);c.drawOval(330,150,455,198,p);
-            hill.reset();hill.moveTo(0,490);hill.cubicTo(330,410,720,350,1280,495);hill.lineTo(1280,720);hill.lineTo(0,720);hill.close();p.setShader(new LinearGradient(0,390,0,720,0xff8dcc37,0xff377f13,Shader.TileMode.CLAMP));c.drawPath(hill,p);
-            hill.reset();hill.moveTo(0,590);hill.cubicTo(400,630,900,395,1280,470);hill.lineTo(1280,720);hill.lineTo(0,720);hill.close();p.setShader(new LinearGradient(0,460,0,720,0xff67b82b,0xff2d721a,Shader.TileMode.CLAMP));c.drawPath(hill,p);p.setShader(null);c.restore();}
+        protected void onDraw(Canvas c){shared.draw(c,"xp",getWidth(),getHeight());}
     }
 }
 

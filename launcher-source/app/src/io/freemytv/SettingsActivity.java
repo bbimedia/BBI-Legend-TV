@@ -121,7 +121,9 @@ public class SettingsActivity extends Activity {
 
         private final SettingsActivity activity;
         private final Scene scene = new Scene();
-        private android.graphics.Bitmap brandMark;
+        private android.graphics.Bitmap brandMark,donateQr;
+        private final ThemeWallpaper wallpaper=new ThemeWallpaper();
+        private String wallpaperTheme="default";
         private final Paint brandPaint=new Paint(Paint.ANTI_ALIAS_FLAG|Paint.FILTER_BITMAP_FLAG);
         private final Handler handler = new Handler(Looper.getMainLooper());
         private final Spring[] pop = new Spring[12];
@@ -180,6 +182,7 @@ public class SettingsActivity extends Activity {
             setFocusable(true);
             setContentDescription("BBI Legend TV");
             try(java.io.InputStream in=getContext().getAssets().open("bbi-mark.png")){brandMark=android.graphics.BitmapFactory.decodeStream(in);}catch(java.io.IOException ignored){}
+            try(java.io.InputStream in=getContext().getAssets().open("donate-qr.png")){donateQr=android.graphics.BitmapFactory.decodeStream(in);}catch(java.io.IOException ignored){}
             // TalkBack: one item per row, id = row + 1.
             spoken = new Spoken(this, new Spoken.Source() {
                 @Override public void items(List<Integer> out) { for (int i = 1; i <= rowCount(); i++) out.add(i); }
@@ -264,6 +267,7 @@ public class SettingsActivity extends Activity {
         }
 
         void resume() {
+            wallpaperTheme=PortableControl.theme(getContext());
             if (running) return;
             running = true;
             startedAt = SystemClock.uptimeMillis();
@@ -359,7 +363,9 @@ public class SettingsActivity extends Activity {
                 lastSky = up;
                 scene.advance(seconds);
             }
-            scene.drawBackground(c);
+            if(!wallpaper.draw(c,wallpaperTheme,w,h))scene.drawBackground(c);
+            // A dim layer keeps settings legible while preserving the active desktop wallpaper.
+            c.drawColor(0x59071422);
 
             // On the left: big symbol, title, description.
             float cx = 500 * k;
@@ -369,7 +375,23 @@ public class SettingsActivity extends Activity {
             c.drawText(versionName(getContext()), cx, 704 * k, version);
 
             if (screen == MAIN) drawMain(c, seconds); else if (screen == HOME_CHOICE) drawChoice(c); else if (screen == PICKER) drawPicker(c); else if (screen == SHELF_EDIT) drawShelfEditor(c); else drawList(c);
-            Paint credit=Ui.text(Ui.regular,18*k,0x88FFFFFF);credit.setTextAlign(Paint.Align.CENTER);c.drawText("Mã nguồn: github.com/simbasjungles/free-my-tv · MIT",w/2f,h-22*k,credit);
+            drawDonation(c);
+            Paint footerShade=new Paint();footerShade.setColor(0xc90b172b);c.drawRect(0,h-88*k,w,h,footerShade);
+            Paint credit=Ui.text(Ui.regular,20*k,0xffedf4ff);credit.setTextAlign(Paint.Align.CENTER);
+            c.drawText("Mã nguồn gốc: @free-my-tv - MIT - Phát triển: BBIMedia.VN",w/2f,h-58*k,credit);
+            Paint disclaimer=Ui.text(Ui.regular,17*k,0xffc6d3e5);disclaimer.setTextAlign(Paint.Align.CENTER);
+            c.drawText("Miễn trừ trách nhiệm: Tương thích tùy thiết bị/firmware; hãy sao lưu trước khi thay đổi. Phần mềm cung cấp theo hiện trạng, trong phạm vi pháp luật cho phép.",w/2f,h-33*k,disclaimer);
+            c.drawText("Hình ảnh, nhãn hiệu bên thứ ba thuộc chủ sở hữu; giao diện tham khảo không đồng nghĩa được cấp quyền sử dụng. Giá/lịch chỉ tham khảo, có thể thay đổi.",w/2f,h-11*k,disclaimer);
+        }
+
+        private void drawDonation(Canvas c){
+            Paint card=new Paint(Paint.ANTI_ALIAS_FLAG);card.setColor(0xefeff5fb);tmp.set(95*k,758*k,910*k,978*k);c.drawRoundRect(tmp,14*k,14*k,card);
+            if(donateQr!=null){float maxW=175*k,maxH=190*k,ratio=Math.min(maxW/donateQr.getWidth(),maxH/donateQr.getHeight());float bw=donateQr.getWidth()*ratio,bh=donateQr.getHeight()*ratio;tmp.set(115*k+(maxW-bw)/2,773*k+(maxH-bh)/2,115*k+(maxW+bw)/2,773*k+(maxH+bh)/2);c.drawBitmap(donateQr,null,tmp,brandPaint);}
+            float x=315*k;
+            Paint heading=Ui.text(Ui.semibold,24*k,0xff235288);c.drawText("Ủng hộ BBI Legend TV",x,797*k,heading);
+            Paint account=Ui.text(Ui.semibold,32*k,0xff174b80);c.drawText("0301000113030",x,841*k,account);
+            Paint detail=Ui.text(Ui.regular,21*k,0xff405972);c.drawText("Ho Kinh Doanh BBI MEDIA",x,876*k,detail);c.drawText("Ngân hàng An Bình (ABBANK)",x,907*k,detail);
+            Paint note=Ui.text(Ui.regular,18*k,0xff6d8196);c.drawText("Quét VietQR bằng ứng dụng ngân hàng.",x,940*k,note);c.drawText("Cảm ơn anh/chị đã đồng hành cùng dự án!",x,963*k,note);
         }
 
         private void drawMain(Canvas c, float seconds) {
@@ -428,7 +450,7 @@ public class SettingsActivity extends Activity {
                 y += errorLayout.getLineBaseline(errorLayout.getLineCount() - 1) - errorLayout.getLineBaseline(0) + 46 * k;
             }
             // Keep diagnostics below all seven controls and above the source footer.
-            float limit=h-60*k;
+            float limit=h-110*k;
             if(y+170*k<limit)y=drawComparison(c,y);
             if(y+160*k<limit)y=drawRecs(c,y+26*k);
             if(y+150*k<limit)drawNotices(c,y+40*k);

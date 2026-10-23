@@ -95,15 +95,10 @@ final class MacHomeView extends android.widget.FrameLayout {
             int save=canvas.save(); canvas.clipPath(rounded); super.onDraw(canvas); canvas.restoreToCount(save);
         }
     }
-    private final class Wallpaper extends View {
+    private final class Wallpaper extends View {private final ThemeWallpaper shared=new ThemeWallpaper();
         private final Paint p=new Paint(Paint.ANTI_ALIAS_FLAG);private final Path curve=new Path();
         Wallpaper(Activity a){super(a);}
-        protected void onDraw(Canvas c){c.save();c.scale(getWidth()/1280f,getHeight()/720f);
-            p.setShader(new LinearGradient(100,0,1100,720,new int[]{0xff122a61,0xff566fbb,0xffe6adbe},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
-            p.setShader(new RadialGradient(1020,110,700,new int[]{0xffffe9d4,0x99f79ca8,0},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
-            curve.reset();curve.moveTo(-100,610);curve.cubicTo(120,0,500,-110,865,110);curve.cubicTo(520,150,420,450,500,820);curve.lineTo(-100,820);curve.close();p.setShader(new LinearGradient(100,200,700,700,new int[]{0xff203e94,0xff6b8fe8,0xffa6cdf5},null,Shader.TileMode.CLAMP));c.drawPath(curve,p);
-            curve.reset();curve.moveTo(250,780);curve.cubicTo(500,260,880,160,1360,350);curve.lineTo(1360,780);curve.close();p.setShader(new LinearGradient(600,280,1100,800,new int[]{0xffbdc8f6,0xff788bd0,0xff242a64},null,Shader.TileMode.CLAMP));c.drawPath(curve,p);
-            curve.reset();curve.moveTo(490,780);curve.cubicTo(780,330,1020,400,1350,550);curve.lineTo(1350,780);curve.close();p.setShader(new LinearGradient(800,430,1100,760,0xfff6d2dd,0xff9b79b2,Shader.TileMode.CLAMP));c.drawPath(curve,p);p.setShader(null);c.restore();}
+        protected void onDraw(Canvas c){shared.draw(c,"macos",getWidth(),getHeight());}
     }
 }
 
