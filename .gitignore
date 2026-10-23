@@ -13,3 +13,7 @@ tools/platform-tools/
 adbkey
 adbkey.pub
 config.properties
+
+.build-launcher/
+launcher-source/out/
+launcher-source/FreeMyTV.apk

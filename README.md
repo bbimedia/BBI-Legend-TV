@@ -1,6 +1,6 @@
 # BBI Legend TV
 
-Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **Free My TV, Windows XP, Vista và macOS**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
+Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **Free My TV, Windows XP, XP Widgets, Vista và macOS**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
 
 Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765`. Có file khởi chạy cho **Windows, Linux và macOS**; Windows đã được kiểm tra thực tế.
 
@@ -8,7 +8,7 @@ Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765
 
 - **Hướng dẫn bằng hình:** từng bước bật chế độ nhà phát triển, gỡ lỗi USB, lấy địa chỉ IP và cho phép máy tính kết nối với TV.
 - **Kết nối & kiểm tra:** đọc model, phiên bản Android, kiểm tra khả năng hỗ trợ; kết nối ADB trong mạng nội bộ và ghép nối bằng mã 6 số.
-- **Kho giao diện:** Free My TV mặc định, Windows XP, Vista và macOS trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
+- **Kho giao diện:** Free My TV mặc định, Windows XP, XP Widgets, Vista và macOS trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
 - **Sao lưu & khôi phục:** tự tạo backup trước khi thay đổi, có sao lưu thủ công; kiểm tra SHA-256 và chỉ khôi phục về đúng TV đã tạo bản sao.
 - **Home 3 lần:** nhấn Home liên tục 3 lần để đóng hẳn ứng dụng vừa dùng; bảo vệ launcher, bàn phím và dịch vụ hệ thống.
 - **Cài đặt nhanh:** âm thanh điều hướng, thành phố và đơn vị nhiệt độ, thời tiết / crypto trên theme mặc định, ngày giờ tự động; mở cài đặt mạng và Trợ năng trên TV.
@@ -101,6 +101,23 @@ Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòn
 - **Giao diện:** XP, Vista và macOS là các phong cách lấy cảm hứng, không cài hệ điều hành tương ứng lên TV. Gợi ý phim trên theme mặc định cần bản build có khóa TMDB riêng.
 - **Kết nối:** API chỉ chấp nhận IP LAN thuộc các dải `10.x`, `172.16–31.x`, `192.168.x`. ADB ghép nối cổng động cần chuyển sang cổng 5555 để cơ chế tự kết nối của Free My TV hoạt động.
 - **Dữ liệu:** máy chủ chỉ lắng nghe `127.0.0.1`, kiểm tra token phiên và Host/Origin. Mã ghép nối chỉ giữ tạm trong bộ nhớ. Không đưa khóa ADB, khóa ký APK hoặc backup cá nhân lên repo.
+
+## XP Widgets — màn hình thông tin phong cách XP
+
+Theme **XP Widgets** được thêm riêng, giữ theme XP cổ điển. Trong **Kho giao diện**, chọn **XP Widgets** rồi **Cài giao diện đã chọn** để cập nhật APK có theme mới. Nếu TV đã có APK 1.3-widgets, có thể dùng **Chỉ đổi theme**. Sau khi cài, widget chạy trực tiếp trên TV; không cần giữ máy tính mở.
+
+- **Bố cục:** cột ứng dụng bên trái, sáu cửa sổ XP cho đồng hồ, thời tiết, lịch, bóng đá, vàng và chứng khoán; thanh Start ở dưới. Dùng remote để chọn, nhấn OK xem chi tiết; Back/Menu mở danh sách app.
+- **Thời gian & lịch:** giờ Việt Nam UTC+7, lịch dương theo tháng và lịch âm Việt Nam tính trên TV (1900–2099, có tháng nhuận). Nhấn OK vào lịch để xem từng ngày âm/dương, chuyển tháng.
+- **Thời tiết:** Open-Meteo, theo thành phố và đơn vị nhiệt độ đã chọn; làm mới khoảng 30 phút. Công tắc thời tiết cũng áp dụng cho XP Widgets.
+- **Bóng đá:** Hôm nay / 7 ngày tới. Ưu tiên đội tuyển Việt Nam nam, nữ và V.League 1; tiếp theo là Ngoại hạng Anh, Champions League (C1), Serie A, La Liga và Bundesliga. Chi tiết có bộ lọc từng giải và liên kết VPF/VFF. Dữ liệu TheSportsDB, làm mới khoảng 6 giờ; tải nền có giới hạn tốc độ, lần đầu có thể mất khoảng 3 phút.
+- **Kênh phát tại Việt Nam:** ghép theo mã trận và quốc gia trong lịch kênh của TheSportsDB. Chỉ hiện khi nguồn có thông tin; không suy đoán từ đơn vị nắm bản quyền và không cung cấp luồng phát. Trận thiếu kênh ghi rõ **Chưa có thông tin kênh tại Việt Nam**. Gói miễn phí giới hạn số trận/kênh; lịch không đại diện toàn bộ trận hoặc lịch phát sóng. Đội tuyển nam/nữ còn phụ thuộc mức độ bao phủ rất hạn chế của nguồn.
+- **Giá vàng:** vàng miếng SJC do DOJI công bố, qua feed mở taichinh.com; hiển thị mua/bán theo triệu đồng/lượng và mốc công bố riêng. Biểu đồ giá bán tích lũy các mốc thực nhận trên TV (tối đa 30 ngày/240 điểm), cần ít nhất hai mốc để vẽ; không phải lịch sử thị trường đầy đủ. Làm mới khoảng 15 phút.
+- **Chứng khoán Việt Nam:** chọn VNINDEX, VN30, FPT, VCB, HPG. Nguồn DNSE/Entrade Chart API, biểu đồ giá đóng cửa theo phiên; chỉ số tính bằng điểm, cổ phiếu nghìn đồng; phần trăm so với phiên trước trong chuỗi. Hiển thị rõ ngày phiên, không phải bảng điện trực tiếp. Làm mới khoảng 15 phút.
+- **Khi mất mạng:** giữ bản lưu nếu có và ghi trạng thái; không tạo số liệu mẫu. Đồng hồ/lịch vẫn hoạt động. Giá có thể trễ và chỉ dùng tham khảo, không phải khuyến nghị đầu tư. Lịch/kênh có thể thay đổi, nên đối chiếu đơn vị phát sóng trước giờ đấu.
+
+Ảnh XP Widgets trong kho giao diện là minh họa bố cục, dùng dấu `--` ở các mục cần dữ liệu mạng. Dữ liệu widget và đường giá tích lũy lưu cục bộ trên TV, không nằm trong gói backup tùy chọn của công cụ. Các nguồn mạng nhận kết nối thông thường từ TV; Open-Meteo nhận tọa độ thành phố đã chọn.
+
+Nguồn và tài liệu: [Open-Meteo](https://open-meteo.com/en/docs), [TheSportsDB API](https://www.thesportsdb.com/docs/api), [taichinh.com API](https://taichinh.com/api), [DNSE](https://www.dnse.com.vn/). Các endpoint có thể thay đổi hoặc giới hạn truy cập; giấy phép của dự án không cấp thêm quyền với dữ liệu của nhà cung cấp.
 
 ## Thông báo phiên bản mới
 

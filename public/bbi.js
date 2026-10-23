@@ -1,16 +1,21 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.2.0';
+  const VERSION = '1.3.0';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
-    ['◈','Bốn diện mạo','Free My TV mặc định, XP, Vista và macOS trong cùng một bản cài.'],
+    ['◈','Năm diện mạo','Free My TV mặc định, XP, XP Widgets, Vista và macOS trong cùng một bản cài.'],
     ['↶','Sao lưu & khôi phục','Tự backup trước thay đổi, kiểm tra toàn vẹn và khôi phục đúng TV.'],
     ['⌂','Home 3 lần','Đóng hẳn ứng dụng vừa dùng; giữ dữ liệu và bảo vệ dịch vụ hệ thống.'],
     ['♫','Cá nhân hóa nhanh','Âm thanh điều hướng, thời tiết, thành phố và các thao tác nhanh trên TV.'],
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.3.0',date:'23/10/2026',title:'XP Widgets · Một màn hình, nhiều thông tin',highlights:[
+      {title:'Theme XP Widgets riêng',desc:'Giữ theme XP cổ điển; thêm bố cục TV với đồng hồ, lịch âm/dương UTC+7, lịch tháng và thời tiết theo thành phố.'},
+      {title:'Bóng đá và kênh tại Việt Nam',desc:'Hôm nay/7 ngày: ưu tiên ĐT Việt Nam nam/nữ, V.League; NHA, C1, Serie A, La Liga và Bundesliga. Chỉ ghép kênh theo trận/quốc gia, ghi rõ khi chưa có; nguồn miễn phí giới hạn phạm vi.'},
+      {title:'Vàng và chứng khoán Việt Nam',desc:'Giá DOJI/SJC, biểu đồ giá bán tích lũy trên TV; VNINDEX, VN30, FPT, VCB và HPG với biểu đồ đóng cửa theo phiên. Có mốc nguồn, cache và trạng thái mất mạng; không dùng giá giả.'}
+    ]},
     {version:'v1.2.0',date:'23/10/2026',title:'Thông báo phiên bản mới & thông tin sử dụng',highlights:[
       {title:'Theo dõi GitHub Releases',desc:'Kiểm tra bản ổn định mới mỗi 24 giờ, có kiểm tra thủ công, công tắc tự động và liên kết tải; dùng bình thường khi mất mạng.'},
       {title:'Thông tin tương thích và quyền sở hữu',desc:'Bổ sung giới hạn tương thích từng TV, phạm vi backup, miễn trừ trách nhiệm và quyền đối với hình ảnh, nhãn hiệu của bên thứ ba.'}

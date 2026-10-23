@@ -25,7 +25,7 @@ function client(saved = {}, fail = false) {
   };
   const context = {document:{querySelector}, localStorage:{getItem:()=>JSON.stringify(saved),setItem:(_k,v)=>persisted=JSON.parse(v)},
     AbortController, setTimeout, clearTimeout, setInterval:()=>{},
-    fetch:async()=>{calls++;if(fail)throw Error('offline');return {ok:true,json:async()=>({tag_name:'v1.3.0'})};}};
+    fetch:async()=>{calls++;if(fail)throw Error('offline');return {ok:true,json:async()=>({tag_name:'v1.4.0'})};}};
   vm.runInNewContext(code,context);
   return {nodes, calls:()=>calls, saved:()=>persisted, flush:()=>new Promise(resolve=>setImmediate(resolve))};
 }
@@ -34,7 +34,7 @@ function client(saved = {}, fail = false) {
   assert.equal(fresh.calls(),1);
   assert.equal(fresh.nodes.get('#update-banner').classList.contains('hidden'),false);
   fresh.nodes.get('#update-dismiss').events.click();
-  assert.equal(fresh.saved().dismissed,'v1.3.0');
+  assert.equal(fresh.saved().dismissed,'v1.4.0');
   const cached=client(fresh.saved());await cached.flush();assert.equal(cached.calls(),0);
   assert.equal(cached.nodes.get('#update-banner').classList.contains('hidden'),true);
   const off=client({enabled:false});await off.flush();assert.equal(off.calls(),0);
