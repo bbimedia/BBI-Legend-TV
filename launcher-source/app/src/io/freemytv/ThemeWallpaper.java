@@ -10,6 +10,7 @@ final class ThemeWallpaper {
         else if("vista".equals(theme)||"vista-widgets".equals(theme))vista(c,width,height);
         else if("macos".equals(theme)||"macos-widgets".equals(theme))macos(c,width,height);
         else if("xp-widgets".equals(theme))xp_widgets(c,width,height);
+        else if("ubuntu".equals(theme)||"ubuntu-widgets".equals(theme))ubuntu(c,width,height);
         else return false;
         return true;
     }
@@ -30,5 +31,16 @@ final class ThemeWallpaper {
             curve.reset();curve.moveTo(-100,610);curve.cubicTo(120,0,500,-110,865,110);curve.cubicTo(520,150,420,450,500,820);curve.lineTo(-100,820);curve.close();p.setShader(new LinearGradient(100,200,700,700,new int[]{0xff203e94,0xff6b8fe8,0xffa6cdf5},null,Shader.TileMode.CLAMP));c.drawPath(curve,p);
             curve.reset();curve.moveTo(250,780);curve.cubicTo(500,260,880,160,1360,350);curve.lineTo(1360,780);curve.close();p.setShader(new LinearGradient(600,280,1100,800,new int[]{0xffbdc8f6,0xff788bd0,0xff242a64},null,Shader.TileMode.CLAMP));c.drawPath(curve,p);
             curve.reset();curve.moveTo(490,780);curve.cubicTo(780,330,1020,400,1350,550);curve.lineTo(1350,780);curve.close();p.setShader(new LinearGradient(800,430,1100,760,0xfff6d2dd,0xff9b79b2,Shader.TileMode.CLAMP));c.drawPath(curve,p);p.setShader(null);c.restore();}
+    /** Aubergine-to-orange gradient with flowing translucent ribbons; original artwork, no Canonical marks. */
+    private void ubuntu(Canvas c,float width,float height){c.save();c.scale(width/1280f,height/720f);
+            p.setShader(new LinearGradient(0,0,1280,720,new int[]{0xff1d0618,0xff3d0d33,0xff6a1d55,0xff2a0820},new float[]{0f,.38f,.7f,1f},Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
+            p.setShader(new RadialGradient(1080,640,760,new int[]{0xccf26a2e,0x66e95420,0x00e95420},new float[]{0f,.45f,1f},Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
+            p.setShader(new RadialGradient(260,90,520,new int[]{0x55b23a8c,0x00b23a8c},null,Shader.TileMode.CLAMP));c.drawRect(0,0,1280,720,p);
+            ribbon.reset();ribbon.moveTo(-80,560);ribbon.cubicTo(260,420,520,640,840,470);ribbon.cubicTo(1030,370,1170,250,1380,290);ribbon.lineTo(1380,420);ribbon.cubicTo(1160,390,1040,520,850,600);ribbon.cubicTo(540,730,280,540,-80,690);ribbon.close();
+            p.setShader(new LinearGradient(0,600,1280,320,new int[]{0x00e95420,0x88f07a3c,0x66ff9a5c,0x22ffc29a},null,Shader.TileMode.CLAMP));c.drawPath(ribbon,p);
+            ribbon.reset();ribbon.moveTo(-60,360);ribbon.cubicTo(300,250,600,420,900,300);ribbon.cubicTo(1080,230,1200,130,1360,150);ribbon.lineTo(1360,215);ribbon.cubicTo(1190,215,1070,330,880,385);ribbon.cubicTo(590,470,300,330,-60,440);ribbon.close();
+            p.setShader(new LinearGradient(0,400,1280,150,new int[]{0x00c34fa0,0x55c34fa0,0x44e95420,0x00e95420},null,Shader.TileMode.CLAMP));c.drawPath(ribbon,p);p.setShader(null);
+            p.setStyle(Paint.Style.STROKE);p.setStrokeWidth(2);p.setColor(0x55ffd2b8);ribbon.reset();ribbon.moveTo(-60,630);ribbon.cubicTo(280,480,540,690,850,535);ribbon.cubicTo(1040,440,1170,320,1360,350);c.drawPath(ribbon,p);
+            p.setColor(0x33ffffff);p.setStrokeWidth(1.5f);ribbon.reset();ribbon.moveTo(-60,400);ribbon.cubicTo(300,290,600,445,890,340);ribbon.cubicTo(1070,270,1190,175,1360,182);c.drawPath(ribbon,p);p.setStyle(Paint.Style.FILL);c.restore();}
     private void xp_widgets(Canvas c,float width,float height){float w=width,h=height;p.setShader(new LinearGradient(0,0,0,h,0xff1866b7,0xffa6d8f5,Shader.TileMode.CLAMP));c.drawRect(0,0,w,h,p);p.setShader(null);p.setColor(0x44ffffff);c.drawOval(.6f*w,.03f*h,.94f*w,.1f*h,p);p.setAlpha(255);Path hill=new Path();hill.moveTo(0,h*.7f);hill.cubicTo(w*.35f,h*.45f,w*.65f,h*.6f,w,h*.72f);hill.lineTo(w,h);hill.lineTo(0,h);hill.close();p.setShader(new LinearGradient(0,h*.6f,0,h,0xff6caa35,0xff2e7020,Shader.TileMode.CLAMP));c.drawPath(hill,p);p.setShader(null);}
 }

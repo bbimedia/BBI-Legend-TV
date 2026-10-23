@@ -15,7 +15,7 @@ from server import Studio, StudioError, validate_endpoint, validated_config, mak
 
 class ValidationTests(unittest.TestCase):
     def test_xp_widgets_theme(self):
-        for theme in ('xp', 'vista', 'macos', 'xp-widgets', 'vista-widgets', 'macos-widgets', 'default'):
+        for theme in ('xp', 'vista', 'macos', 'ubuntu', 'xp-widgets', 'vista-widgets', 'macos-widgets', 'ubuntu-widgets', 'default'):
             with self.subTest(theme=theme):
                 self.assertEqual(validated_config({'theme': theme}), {'theme': theme})
 

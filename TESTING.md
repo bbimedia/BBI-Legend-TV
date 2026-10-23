@@ -1,5 +1,11 @@
 # Verification
 
+## v1.3.7 — Giao diện Ubuntu Desktop & Ubuntu Widgets
+
+- Thêm `UbuntuHomeView.java` (thanh trên tối kiểu GNOME, Dock dọc bên trái với vạch cam Yaru `#e95420`, hộp tên app khi di chuyển và nút Hiện ứng dụng 3×3) cùng nền vector tím aubergine chuyển cam trong `ThemeWallpaper.java`.
+- Mở rộng `WidgetHomeView.java` và `HomeQuickBar.java` cho `ubuntu` / `ubuntu-widgets`: thanh trên tối với nút pill cam khi chọn, cửa sổ Yaru sáng kèm nút đóng tròn, dải Dock trái và thanh dưới dạng pill tối.
+- Tạo hai thumbnail SVG mới (`ubuntu-classic-clean.svg`, `ubuntu-widgets-clean.svg`), nâng kho giao diện lên 9 lựa chọn, biên dịch/ký lại `packages/FreeMyTV-Studio.apk` (versionCode 9, versionName 1.3.7) với cùng chứng thư ký.
+
 ## v1.3.6 — Thumbnail và skin thanh menu
 
 - Tạo lại đủ bảy SVG minh họa từ công cụ Python chuẩn: nền, app, Dock/Sidebar/widget và thanh menu theo từng phong cách; không có SSID/số liệu riêng. Kiểm tra XML/viewBox của bảy ảnh, xem thực tế trong trình duyệt cả phần trên và phần dưới kho giao diện.

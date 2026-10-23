@@ -24,6 +24,7 @@ final class VistaHomeView extends android.widget.FrameLayout {
     private final Button start;
     private final FrameLayout popup;
     private final ScrollView scroll;
+    private final AppSuggestionPanel suggestions;
     private final java.util.List<HomeApps.Item> apps = new ArrayList<>();
     private boolean alive = true;
     private View firstDesktop;
@@ -37,6 +38,8 @@ final class VistaHomeView extends android.widget.FrameLayout {
         addView(new Wallpaper(a), new LayoutParams(-1,-1));
         desktop = new LinearLayout(a); desktop.setOrientation(LinearLayout.VERTICAL);
         LayoutParams dp = new LayoutParams(s(220), -2); dp.leftMargin=s(38); dp.topMargin=s(85); addView(desktop,dp);
+        suggestions = new AppSuggestionPanel(a, "vista");
+        LayoutParams sugP = new LayoutParams(s(785), s(590)); sugP.leftMargin = s(245); sugP.topMargin = s(66); addView(suggestions, sugP);
 
         LinearLayout window = new LinearLayout(a); window.setOrientation(LinearLayout.VERTICAL);
         window.setPadding(s(4),s(4),s(4),s(4)); window.setBackground(bg(0xb84b737d,0xe51b303d,10));
@@ -95,14 +98,14 @@ final class VistaHomeView extends android.widget.FrameLayout {
         LinearLayout icon=new LinearLayout(activity);icon.setOrientation(LinearLayout.VERTICAL);icon.setGravity(Gravity.CENTER);icon.setPadding(s(8),s(7),s(8),s(7));icon.setFocusable(true);icon.setSoundEffectsEnabled(false);icon.setContentDescription(it.label);
         ImageView image=new ImageView(activity);image.setScaleType(ImageView.ScaleType.FIT_CENTER);if(it.logo!=null)image.setImageBitmap(it.logo);else if(it.tile!=null)image.setImageBitmap(it.tile); icon.addView(image,new LinearLayout.LayoutParams(s(92),s(57)));
         TextView name=text(it.label,17,Color.WHITE,true);name.setShadowLayer(s(2),s(1),s(2),0xff152d39);name.setGravity(Gravity.CENTER);icon.addView(name,new LinearLayout.LayoutParams(-1,s(31)));
-        icon.setOnFocusChangeListener((v,f)->v.setBackgroundColor(f?0x886fbadd:Color.TRANSPARENT));icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(172),s(108)));if(firstDesktop==null)firstDesktop=icon;
-    }if(firstDesktop!=null)firstDesktop.requestFocus();}
+        icon.setOnFocusChangeListener((v,f)->{v.setBackgroundColor(f?0x886fbadd:Color.TRANSPARENT); if(f) suggestions.showItem(it);});icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(172),s(108)));if(firstDesktop==null)firstDesktop=icon;
+    }if(firstDesktop!=null)firstDesktop.requestFocus(); if(!apps.isEmpty())suggestions.showItem(apps.get(0));}
     private void launch(HomeApps.Item it){click.open();HomeApps.open(activity,it,this,0,0,getWidth(),getHeight());}
     private void showPrograms(boolean inputs){click.open();AppCatalogActivity.open(activity,inputs);}
     private void toggleStart(){showPrograms(false);}
     void resume(){handler.removeCallbacks(tick);tick.run();}
     void pause(){handler.removeCallbacks(tick);}
-    void destroy(){getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}
+    void destroy(){suggestions.destroy();getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}
     void reset(boolean focus){popup.setVisibility(GONE);if(firstDesktop!=null)firstDesktop.requestFocus();else start.requestFocus();}
     private void clickMove(){click.move();}
     boolean onKey(KeyEvent e){int key=e.getKeyCode();if(key==KeyEvent.KEYCODE_DPAD_UP||key==KeyEvent.KEYCODE_DPAD_DOWN||key==KeyEvent.KEYCODE_DPAD_LEFT||key==KeyEvent.KEYCODE_DPAD_RIGHT){navigationKey=e.getAction()==KeyEvent.ACTION_DOWN;return false;}navigationKey=false;if(e.getKeyCode()==KeyEvent.KEYCODE_BACK||e.getKeyCode()==KeyEvent.KEYCODE_MENU){if(e.getAction()==KeyEvent.ACTION_DOWN&&e.getRepeatCount()==0)toggleStart();return true;}return false;}

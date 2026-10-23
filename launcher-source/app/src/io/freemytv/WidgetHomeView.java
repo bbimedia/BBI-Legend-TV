@@ -10,11 +10,11 @@ import org.json.*;
 import java.util.*;
 import java.util.concurrent.*;
 
-/** Shared widget desktop and data behavior, with XP, Vista Aero and macOS skins. */
+/** Shared widget desktop and data behavior, with XP, Vista Aero, macOS and Ubuntu (Yaru) skins. */
 final class WidgetHomeView extends FrameLayout {
     private final Activity activity;
     private final String theme;
-    private final boolean mac,vista;
+    private final boolean mac,vista,ubuntu;
     private final float scale;
     private final FrameLayout canvas;
     private final Handler handler=new Handler();
@@ -33,10 +33,11 @@ final class WidgetHomeView extends FrameLayout {
     private final android.view.ViewTreeObserver.OnGlobalFocusChangeListener focusSound=(oldView,newView)->{if(navigationKey&&oldView!=null&&newView!=null)soundMove();};
     private final Runnable ticker=new Runnable(){public void run(){if(!active)return;updateClock();data.refresh();handler.postDelayed(this,30000);}};
     WidgetHomeView(Activity a,String selectedTheme){
-        super(a);theme=selectedTheme;mac="macos-widgets".equals(theme);vista="vista-widgets".equals(theme);activity=a;sound=new Click(a);data=new XpWidgetsData(a);
+        super(a);theme=selectedTheme;mac="macos-widgets".equals(theme);vista="vista-widgets".equals(theme);ubuntu="ubuntu-widgets".equals(theme);activity=a;sound=new Click(a);data=new XpWidgetsData(a);
         scale=Math.min(a.getResources().getDisplayMetrics().widthPixels/1280f,a.getResources().getDisplayMetrics().heightPixels/720f);
         setBackgroundColor(0xff17467d);canvas=new FrameLayout(a);addView(canvas,new LayoutParams(s(1280),s(720),Gravity.CENTER));
         canvas.addView(new Landscape(a),new LayoutParams(-1,-1));
+        if(ubuntu){View dock=new View(a);dock.setBackground(new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,new int[]{0xeb1b1b1b,0xe0242424}));place(dock,0,64,192,656);}
         Button refresh=button("↻ Làm mới");place(refresh,1060,70,180,30);refresh.setOnClickListener(v->{sound.open();data.requestRefresh();Toast.makeText(a,"Đang làm mới dữ liệu",Toast.LENGTH_SHORT).show();});
         rail=new LinearLayout(a);rail.setOrientation(LinearLayout.VERTICAL);place(rail,24,106,145,470);
         Button all=button("▦  Ứng dụng");place(all,24,589,145,45);all.setOnClickListener(v->programs());
@@ -69,12 +70,13 @@ final class WidgetHomeView extends FrameLayout {
         stockSource=text("DNSE · giá đóng cửa theo phiên",11,0xff718092,false);stockBody.addView(stockSource);
         stockChart.setFocusable(true);focus(stockChart);stockChart.setOnClickListener(v->stockDialog());
         LinearLayout bar=new LinearLayout(a);bar.setGravity(Gravity.CENTER_VERTICAL);
-        bar.setPadding(s(mac?14:0),s(mac?5:0),s(mac?14:0),s(mac?5:0));
-        bar.setBackground(gradient(mac?0xddffffff:vista?0xdd203e53:0xff388bff,mac?0xbbe0e9fa:vista?0xee081b30:0xff1453d0,mac?22:0));
-        bar.setElevation(s(12));place(bar,mac?192:0,664,mac?1046:1280,56);
-        Button start=button(mac?"▦  Apps":vista?"◉  Bắt đầu":"▦  start");
-        if(!mac){start.setTextColor(Color.WHITE);start.setTypeface(Typeface.DEFAULT,Typeface.BOLD_ITALIC);start.setBackground(gradient(vista?0xff5bb8d8:0xff69b853,vista?0xff125274:0xff23792d,vista?28:8));}
-        bar.addView(start,new LinearLayout.LayoutParams(s(154),-1));start.setOnClickListener(v->programs());
+        boolean pill=mac||ubuntu;bar.setPadding(s(pill?14:0),s(pill?5:0),s(pill?14:0),s(pill?5:0));
+        bar.setBackground(gradient(mac?0xddffffff:ubuntu?0xeb262626:vista?0xdd203e53:0xff388bff,mac?0xbbe0e9fa:ubuntu?0xeb141414:vista?0xee081b30:0xff1453d0,pill?22:0));
+        bar.setElevation(s(12));place(bar,pill?192:0,664,pill?1046:1280,56);
+        Button start=button(mac?"▦  Apps":ubuntu?"▦  Hiện ứng dụng":vista?"◉  Bắt đầu":"▦  start");
+        if(ubuntu){start.setTextColor(Color.WHITE);start.setTypeface(Typeface.DEFAULT,Typeface.BOLD);start.setBackground(gradient(0xfff0682f,0xffd9481a,20));}
+        else if(!mac){start.setTextColor(Color.WHITE);start.setTypeface(Typeface.DEFAULT,Typeface.BOLD_ITALIC);start.setBackground(gradient(vista?0xff5bb8d8:0xff69b853,vista?0xff125274:0xff23792d,vista?28:8));}
+        bar.addView(start,new LinearLayout.LayoutParams(s(ubuntu?190:154),-1));start.setOnClickListener(v->programs());
         TextView task=text("",17,mac?0xff263e5a:Color.WHITE,true);bar.addView(task,new LinearLayout.LayoutParams(0,-2,1));
         Button settings=button("Cài đặt");bar.addView(settings,new LinearLayout.LayoutParams(s(170),s(38)));settings.setOnClickListener(v->launch(HomeApps.settings()));
         taskClock=text("",18,mac?0xff263e5a:Color.WHITE,true);taskClock.setGravity(Gravity.CENTER);bar.addView(taskClock,new LinearLayout.LayoutParams(s(115),-1));
@@ -82,23 +84,25 @@ final class WidgetHomeView extends FrameLayout {
         appsLoader.execute(()->{List<HomeApps.Item> result=HomeApps.shelf(a,false);result.addAll(HomeApps.others(a));handler.post(()->{if(!alive)return;apps.addAll(result);populateApps();});});
         updateClock();render();setFocusable(false);
     }
-    private String edition(){return mac?"macOS Widgets":vista?"Vista Widgets":"XP Widgets";}
+    private String edition(){return mac?"macOS Widgets":ubuntu?"Ubuntu Widgets":vista?"Vista Widgets":"XP Widgets";}
     private int s(float value){return Math.round(value*scale);}
     private void place(View v,int x,int y,int w,int h){LayoutParams p=new LayoutParams(s(w),s(h));p.leftMargin=s(x);p.topMargin=s(y);canvas.addView(v,p);}
     private GradientDrawable gradient(int top,int bottom,int radius){GradientDrawable d=new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,new int[]{top,bottom});d.setCornerRadius(s(radius));return d;}
     private TextView text(String label,int size,int color,boolean bold){TextView t=new TextView(activity);t.setText(label);t.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(size));t.setTextColor(color);t.setTypeface(Typeface.create("sans-serif",bold?Typeface.BOLD:Typeface.NORMAL));return t;}
-    private int radius(){return mac?16:vista?9:4;}
-    private int focusTop(){return mac?0xffedf6ff:vista?0xffd5f5ff:0xffffedaa;}
-    private int focusBottom(){return mac?0xffa9d2ff:vista?0xff86c9e8:0xffffca59;}
+    private int radius(){return mac?16:ubuntu?12:vista?9:4;}
+    private int focusTop(){return mac?0xffedf6ff:ubuntu?0xffffe3d6:vista?0xffd5f5ff:0xffffedaa;}
+    private int focusBottom(){return mac?0xffa9d2ff:ubuntu?0xfff5a079:vista?0xff86c9e8:0xffffca59;}
+    private int idleTop(){return ubuntu?0xfffafafa:0xfffafaf2;}
+    private int idleBottom(){return ubuntu?0xffe8e8e8:0xffdce6ec;}
     private void focus(View v){final android.graphics.drawable.Drawable original=v.getBackground();v.setSoundEffectsEnabled(false);v.setOnFocusChangeListener((view,yes)->{view.setElevation(yes?s(8):0);view.setBackground(yes?gradient(focusTop(),focusBottom(),radius()):original);});}
-    private Button button(String label){Button b=new Button(activity);b.setText(label);b.setAllCaps(false);b.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(15));b.setTextColor(0xff164379);b.setPadding(s(6),0,s(6),0);b.setMinHeight(0);b.setMinimumHeight(0);b.setSoundEffectsEnabled(false);b.setBackground(gradient(0xfffafaf2,0xffdce6ec,radius()));b.setClipToOutline(true);b.setOnFocusChangeListener((v,f)->b.setBackground(gradient(f?focusTop():0xfffafaf2,f?focusBottom():0xffdce6ec,radius())));return b;}
+    private Button button(String label){Button b=new Button(activity);b.setText(label);b.setAllCaps(false);b.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(15));b.setTextColor(ubuntu?0xff2f2f2f:0xff164379);b.setPadding(s(6),0,s(6),0);b.setMinHeight(0);b.setMinimumHeight(0);b.setSoundEffectsEnabled(false);b.setBackground(gradient(idleTop(),idleBottom(),radius()));b.setClipToOutline(true);b.setOnFocusChangeListener((v,f)->b.setBackground(gradient(f?focusTop():idleTop(),f?focusBottom():idleBottom(),radius())));return b;}
     private LinearLayout window(String label,int x,int y,int w,int h){
-        LinearLayout frame=new LinearLayout(activity);frame.setOrientation(LinearLayout.VERTICAL);frame.setPadding(s(mac?1:3),s(mac?1:3),s(mac?1:3),s(mac?1:3));
-        frame.setBackground(gradient(mac?0xeef6f8ff:vista?0xcc80c4da:0xff2779ef,mac?0xeedfe9f6:vista?0xdd174259:0xff1046b5,mac?18:vista?12:7));frame.setClipToOutline(true);frame.setElevation(s(mac?10:7));place(frame,x,y,w,h);
-        LinearLayout header=new LinearLayout(activity);header.setGravity(Gravity.CENTER_VERTICAL);header.setPadding(s(10),0,s(8),0);header.setBackground(gradient(mac?0xfff0f3fa:vista?0xaa76b8cf:0xff4098fc,mac?0xffdce4ef:vista?0xcc255569:0xff0960dd,mac?16:vista?8:5));
+        LinearLayout frame=new LinearLayout(activity);frame.setOrientation(LinearLayout.VERTICAL);int edge=mac||ubuntu?1:3;frame.setPadding(s(edge),s(edge),s(edge),s(edge));
+        frame.setBackground(gradient(mac?0xeef6f8ff:ubuntu?0xffd4d4d4:vista?0xcc80c4da:0xff2779ef,mac?0xeedfe9f6:ubuntu?0xffc4c4c4:vista?0xdd174259:0xff1046b5,mac?18:ubuntu?14:vista?12:7));frame.setClipToOutline(true);frame.setElevation(s(mac?10:7));place(frame,x,y,w,h);
+        LinearLayout header=new LinearLayout(activity);header.setGravity(Gravity.CENTER_VERTICAL);header.setPadding(s(10),0,s(8),0);header.setBackground(gradient(mac?0xfff0f3fa:ubuntu?0xfff2f2f2:vista?0xaa76b8cf:0xff4098fc,mac?0xffdce4ef:ubuntu?0xffe6e6e6:vista?0xcc255569:0xff0960dd,mac?16:ubuntu?13:vista?8:5));
         if(mac){for(int color:new int[]{0xffff6058,0xffffbd2e,0xff28c840}){View dot=new View(activity);GradientDrawable d=new GradientDrawable();d.setShape(GradientDrawable.OVAL);d.setColor(color);dot.setBackground(d);LinearLayout.LayoutParams dp=new LinearLayout.LayoutParams(s(8),s(8));dp.rightMargin=s(4);header.addView(dot,dp);}}
-        TextView title=text(label,mac?14:16,mac?0xff324663:Color.WHITE,true);title.setPadding(s(mac?6:0),0,0,0);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));frame.addView(header,new LinearLayout.LayoutParams(-1,s(34)));
-        LinearLayout body=new LinearLayout(activity);body.setOrientation(LinearLayout.VERTICAL);body.setBackgroundColor(mac?0xf2f5f8ff:vista?0xeef0f8fc:0xfff9faf3);body.setPadding(s(16),s(10),s(16),s(10));frame.addView(body,new LinearLayout.LayoutParams(-1,0,1));return body;
+        TextView title=text(label,mac||ubuntu?14:16,mac?0xff324663:ubuntu?0xff303030:Color.WHITE,true);title.setPadding(s(mac?6:ubuntu?4:0),0,0,0);header.addView(title,new LinearLayout.LayoutParams(0,-2,1));if(ubuntu){TextView close=text("×",14,0xff3d3d3d,true);close.setGravity(Gravity.CENTER);GradientDrawable d=new GradientDrawable();d.setShape(GradientDrawable.OVAL);d.setColor(0xffd9d9d9);close.setBackground(d);header.addView(close,new LinearLayout.LayoutParams(s(20),s(20)));}frame.addView(header,new LinearLayout.LayoutParams(-1,s(34)));
+        LinearLayout body=new LinearLayout(activity);body.setOrientation(LinearLayout.VERTICAL);body.setBackgroundColor(mac?0xf2f5f8ff:ubuntu?0xfffafafa:vista?0xeef0f8fc:0xfff9faf3);body.setPadding(s(16),s(10),s(16),s(10));frame.addView(body,new LinearLayout.LayoutParams(-1,0,1));return body;
     }
     private void populateApps(){rail.removeAllViews();firstApp=null;Set<String> seen=new HashSet<>();for(HomeApps.Item item:apps){if(item.kind!=HomeApps.APP||!seen.add(item.key))continue;if(rail.getChildCount()>=5)break;LinearLayout tile=new LinearLayout(activity);tile.setOrientation(LinearLayout.VERTICAL);tile.setGravity(Gravity.CENTER);tile.setFocusable(true);tile.setContentDescription(item.label);focus(tile);ImageView icon=new RoundedAppIcon(activity);icon.setScaleType(ImageView.ScaleType.FIT_CENTER);if(item.logo!=null)icon.setImageBitmap(item.logo);else if(item.tile!=null)icon.setImageBitmap(item.tile);GradientDrawable shape=gradient(0x22ffffff,0x11ffffff,12);icon.setBackground(shape);icon.setClipToOutline(true);tile.addView(icon,new LinearLayout.LayoutParams(s(76),s(48)));TextView name=text(item.label,14,Color.WHITE,true);name.setMaxLines(1);name.setEllipsize(android.text.TextUtils.TruncateAt.END);name.setGravity(Gravity.CENTER);tile.addView(name,new LinearLayout.LayoutParams(-1,s(27)));tile.setOnClickListener(v->launch(item));rail.addView(tile,new LinearLayout.LayoutParams(-1,s(88)));if(firstApp==null)firstApp=tile;}if(firstApp!=null)firstApp.requestFocus();}
     private void launch(HomeApps.Item item){sound.open();HomeApps.open(activity,item,this,0,0,getWidth(),getHeight());}
@@ -107,7 +111,7 @@ final class WidgetHomeView extends FrameLayout {
     private void dialog(String title,View content){sound.open();ScrollView scroll=new ScrollView(activity);scroll.setPadding(s(18),s(10),s(18),s(10));scroll.addView(content);AlertDialog d=new AlertDialog.Builder(activity,android.R.style.Theme_Material_Light_Dialog_Alert).setTitle(title).setView(scroll).setPositiveButton("Đóng",null).create();d.show();d.getWindow().setLayout(s(950),s(580));}
     private void message(String title,String body){TextView t=text(body,20,0xff263e5a,false);t.setPadding(s(10),s(8),s(10),s(8));dialog(title,t);}
     private void updateClock(){long now=System.currentTimeMillis();clock.setText(XpWidgetsData.date(now,"HH:mm"));taskClock.setText(XpWidgetsData.date(now,"HH:mm"));date.setText(XpWidgetsData.date(now,"EEEE, dd/MM/yyyy"));Calendar c=Calendar.getInstance(XpWidgetsData.VN);try{int[] l=VietnamLunar.fromSolar(c.get(Calendar.DAY_OF_MONTH),c.get(Calendar.MONTH)+1,c.get(Calendar.YEAR));lunar.setText("Âm lịch  "+l[0]+" / "+l[1]+(l[3]==1?" nhuận":"")+" · "+VietnamLunar.yearName(l[2]));}catch(Exception e){lunar.setText("Âm lịch hỗ trợ 1900–2099");}String key=XpWidgetsData.date(now,"yyyy-MM-dd");if(!key.equals(monthKey)){monthKey=key;drawMonth(monthGrid,0,false);renderFootball();}}
-    private void drawMonth(LinearLayout host,int offset,boolean large){host.removeAllViews();Calendar c=Calendar.getInstance(XpWidgetsData.VN);c.set(Calendar.DAY_OF_MONTH,1);c.add(Calendar.MONTH,offset);int year=c.get(Calendar.YEAR),month=c.get(Calendar.MONTH),today=Calendar.getInstance(XpWidgetsData.VN).get(Calendar.DAY_OF_MONTH);TextView label=text("Tháng "+(month+1)+" · "+year+(large?"  (số nhỏ: âm lịch)":""),large?24:15,0xff1d4e96,true);host.addView(label);String[] days={"T2","T3","T4","T5","T6","T7","CN"};LinearLayout names=new LinearLayout(activity);for(String name:days){TextView t=text(name,large?18:11,0xff72869c,true);t.setGravity(Gravity.CENTER);names.addView(t,new LinearLayout.LayoutParams(0,large?s(32):s(20),1));}host.addView(names);int first=(c.get(Calendar.DAY_OF_WEEK)+5)%7,max=c.getActualMaximum(Calendar.DAY_OF_MONTH);for(int row=0;row<6;row++){LinearLayout line=new LinearLayout(activity);for(int col=0;col<7;col++){int day=row*7+col-first+1;String value="";if(day>=1&&day<=max){value=String.valueOf(day);if(large)try{int[] l=VietnamLunar.fromSolar(day,month+1,year);value+="\n"+l[0]+"/"+l[1]+(l[3]==1?"n":"");}catch(Exception ignored){}}TextView cell=text(value,large?21:14,col==6?0xffc35945:0xff284d72,false);cell.setGravity(Gravity.CENTER);if(offset==0&&day==today){cell.setBackground(gradient(0xff458fed,0xff2265c7,4));cell.setTextColor(Color.WHITE);}line.addView(cell,new LinearLayout.LayoutParams(0,large?s(57):s(24),1));}host.addView(line);}}
+    private void drawMonth(LinearLayout host,int offset,boolean large){host.removeAllViews();Calendar c=Calendar.getInstance(XpWidgetsData.VN);c.set(Calendar.DAY_OF_MONTH,1);c.add(Calendar.MONTH,offset);int year=c.get(Calendar.YEAR),month=c.get(Calendar.MONTH),today=Calendar.getInstance(XpWidgetsData.VN).get(Calendar.DAY_OF_MONTH);TextView label=text("Tháng "+(month+1)+" · "+year+(large?"  (số nhỏ: âm lịch)":""),large?24:15,0xff1d4e96,true);host.addView(label);String[] days={"T2","T3","T4","T5","T6","T7","CN"};LinearLayout names=new LinearLayout(activity);for(String name:days){TextView t=text(name,large?18:11,0xff72869c,true);t.setGravity(Gravity.CENTER);names.addView(t,new LinearLayout.LayoutParams(0,large?s(32):s(20),1));}host.addView(names);int first=(c.get(Calendar.DAY_OF_WEEK)+5)%7,max=c.getActualMaximum(Calendar.DAY_OF_MONTH);for(int row=0;row<6;row++){LinearLayout line=new LinearLayout(activity);for(int col=0;col<7;col++){int day=row*7+col-first+1;String value="";if(day>=1&&day<=max){value=String.valueOf(day);if(large)try{int[] l=VietnamLunar.fromSolar(day,month+1,year);value+="\n"+l[0]+"/"+l[1]+(l[3]==1?"n":"");}catch(Exception ignored){}}TextView cell=text(value,large?21:14,col==6?0xffc35945:0xff284d72,false);cell.setGravity(Gravity.CENTER);if(offset==0&&day==today){cell.setBackground(ubuntu?gradient(0xfff0682f,0xffd9481a,4):gradient(0xff458fed,0xff2265c7,4));cell.setTextColor(Color.WHITE);}line.addView(cell,new LinearLayout.LayoutParams(0,large?s(57):s(24),1));}host.addView(line);}}
     private void calendarDialog(int offset){LinearLayout body=new LinearLayout(activity);body.setOrientation(LinearLayout.VERTICAL);LinearLayout controls=new LinearLayout(activity),grid=new LinearLayout(activity);grid.setOrientation(LinearLayout.VERTICAL);int[] page={offset};Button prev=button("‹ Tháng trước"),next=button("Tháng sau ›");controls.addView(prev,new LinearLayout.LayoutParams(0,s(44),1));controls.addView(next,new LinearLayout.LayoutParams(0,s(44),1));prev.setOnClickListener(v->drawMonth(grid,--page[0],true));next.setOnClickListener(v->drawMonth(grid,++page[0],true));body.addView(controls);body.addView(grid);drawMonth(grid,offset,true);dialog("Lịch dương / âm Việt Nam · UTC+7",body);}
     private String source(JSONObject b,String label){if(b.optBoolean("loading"))return label+" · đang tải "+b.optInt("days_loaded")+"/7 ngày";long at=b.optLong("fetched");return label+(at>0?" · tải "+XpWidgetsData.date(at,"HH:mm dd/MM"):" · chưa có dữ liệu")+(b.has("error")?" · bản lưu / lỗi mạng":"");}
     private void render(){renderWeather();renderFootball();renderGold();renderStocks();}

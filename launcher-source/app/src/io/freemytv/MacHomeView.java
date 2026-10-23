@@ -24,6 +24,7 @@ final class MacHomeView extends android.widget.FrameLayout {
     private final Button start;
     private final FrameLayout popup;
     private final ScrollView scroll;
+    private final AppSuggestionPanel suggestions;
     private final java.util.List<HomeApps.Item> apps = new ArrayList<>();
     private boolean alive = true;
     private View firstDesktop;
@@ -49,6 +50,9 @@ final class MacHomeView extends android.widget.FrameLayout {
         LinearLayout actions=new LinearLayout(a);windowBody.addView(actions);addAction(actions,"Applications",()->showPrograms(false));addAction(actions,"HDMI Inputs",()->showPrograms(true));addAction(actions,"Settings",()->launch(HomeApps.settings()));TextView help=text("↑ ↓ ← →  Select     •     OK  Open     •     Back  Applications",15,0xff62748e,false);help.setPadding(0,s(24),0,0);windowBody.addView(help);
         TextView edition=text("macOS 27 inspired\nLiquid Glass • TV Edition",15,0xffeef4ff,false);edition.setGravity(Gravity.RIGHT);edition.setShadowLayer(s(2),0,s(1),0x99503b5d);LayoutParams ep=new LayoutParams(-2,-2,Gravity.RIGHT|Gravity.TOP);ep.rightMargin=s(36);ep.topMargin=s(68);addView(edition,ep);edition.setVisibility(GONE);
         LinearLayout dock=new LinearLayout(a);dock.setPadding(s(15),s(8),s(15),s(8));dock.setGravity(Gravity.CENTER);dock.setBackground(bg(0xbbffffff,0x99d1e3fa,28));dock.setElevation(s(14));LayoutParams dp=new LayoutParams(-2,s(122),Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL);dp.bottomMargin=s(20);addView(dock,dp);
+        suggestions = new AppSuggestionPanel(a, "macos");
+        LayoutParams sp = new LayoutParams(s(1200), s(500), Gravity.CENTER_HORIZONTAL);
+        sp.topMargin = s(66); addView(suggestions, sp);
         start=button("▦\nApps",false);start.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(23));start.setOnClickListener(v->toggleStart());dock.addView(start,new LinearLayout.LayoutParams(s(98),s(96)));View separator=new View(a);separator.setBackgroundColor(0x44536c8d);LinearLayout.LayoutParams sep=new LinearLayout.LayoutParams(s(1),s(70));sep.setMargins(s(14),0,s(8),0);dock.addView(separator,sep);desktop=new LinearLayout(a);desktop.setOrientation(LinearLayout.HORIZONTAL);dock.addView(desktop,new LinearLayout.LayoutParams(-2,-1));
         popup=new FrameLayout(a);popup.setBackground(bg(0xf2f9fbff,0xf2dce8f8,26));popup.setPadding(s(18),s(12),s(18),s(12));popup.setElevation(s(28));popup.setVisibility(GONE);LayoutParams pp=new LayoutParams(s(690),s(490),Gravity.CENTER);pp.bottomMargin=s(30);addView(popup,pp);LinearLayout panel=new LinearLayout(a);panel.setOrientation(LinearLayout.VERTICAL);popup.addView(panel,new LayoutParams(-1,-1));TextView heading=text("Applications",27,0xff1a2e49,true);heading.setPadding(s(10),s(8),0,s(10));panel.addView(heading);scroll=new ScrollView(a);panel.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));TextView footer=text("Back to close  •  OK to open",14,0xff61748d,false);footer.setGravity(Gravity.CENTER);panel.addView(footer,new LinearLayout.LayoutParams(-1,s(32)));
         loader.execute(()->{java.util.List<HomeApps.Item> items=HomeApps.shelf(a,false);items.addAll(HomeApps.others(a));handler.post(()->{if(!alive)return;apps.addAll(items);populateDesktop();});});setFocusable(false);
@@ -62,14 +66,14 @@ final class MacHomeView extends android.widget.FrameLayout {
         LinearLayout icon=new LinearLayout(activity);icon.setOrientation(LinearLayout.VERTICAL);icon.setGravity(Gravity.CENTER);icon.setPadding(s(8),s(7),s(8),s(7));icon.setFocusable(true);icon.setSoundEffectsEnabled(false);icon.setContentDescription(it.label);
         ImageView image=new RoundedAppIcon(activity);image.setScaleType(ImageView.ScaleType.FIT_CENTER);if(it.logo!=null)image.setImageBitmap(it.logo);else if(it.tile!=null)image.setImageBitmap(it.tile); icon.addView(image,new LinearLayout.LayoutParams(s(82),s(54)));
         TextView name=text(it.label,13,0xff203448,true);name.setShadowLayer(s(2),s(1),s(2),0x33556c82);name.setGravity(Gravity.CENTER);icon.addView(name,new LinearLayout.LayoutParams(-1,s(31)));
-        icon.setOnFocusChangeListener((v,f)->v.setBackground(bg(f?0x99ffffff:0x00ffffff,f?0x66e5f0ff:0x00ffffff,18)));icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(116),s(102)));if(firstDesktop==null)firstDesktop=icon;
-    }if(firstDesktop!=null)firstDesktop.requestFocus();}
+        icon.setOnFocusChangeListener((v,f)->{v.setBackground(bg(f?0x99ffffff:0x00ffffff,f?0x66e5f0ff:0x00ffffff,18)); if(f) suggestions.showItem(it);});icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(116),s(102)));if(firstDesktop==null)firstDesktop=icon;
+    }if(firstDesktop!=null)firstDesktop.requestFocus(); if(!apps.isEmpty())suggestions.showItem(apps.get(0));}
     private void launch(HomeApps.Item it){click.open();HomeApps.open(activity,it,this,0,0,getWidth(),getHeight());}
     private void showPrograms(boolean inputs){click.open();AppCatalogActivity.open(activity,inputs);}
     private void toggleStart(){showPrograms(false);}
     void resume(){handler.removeCallbacks(tick);tick.run();}
     void pause(){handler.removeCallbacks(tick);}
-    void destroy(){getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}
+    void destroy(){suggestions.destroy();getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}
     void reset(boolean focus){popup.setVisibility(GONE);if(firstDesktop!=null)firstDesktop.requestFocus();else start.requestFocus();}
     private void clickMove(){click.move();}
     boolean onKey(KeyEvent e){int key=e.getKeyCode();if(key==KeyEvent.KEYCODE_DPAD_UP||key==KeyEvent.KEYCODE_DPAD_DOWN||key==KeyEvent.KEYCODE_DPAD_LEFT||key==KeyEvent.KEYCODE_DPAD_RIGHT){navigationKey=e.getAction()==KeyEvent.ACTION_DOWN;return false;}navigationKey=false;if(e.getKeyCode()==KeyEvent.KEYCODE_BACK||e.getKeyCode()==KeyEvent.KEYCODE_MENU){if(e.getAction()==KeyEvent.ACTION_DOWN&&e.getRepeatCount()==0)toggleStart();return true;}return false;}

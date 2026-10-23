@@ -1,6 +1,6 @@
 # BBI Legend TV
 
-Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **XP, Vista, macOS bản cổ điển và bản widget, kèm Free My TV mặc định**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
+Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **XP, Vista, macOS, Ubuntu bản cổ điển và bản widget, kèm Free My TV mặc định**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
 
 Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765`. Có file khởi chạy cho **Windows, Linux và macOS**; Windows đã được kiểm tra thực tế.
 
@@ -8,7 +8,7 @@ Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765
 
 - **Hướng dẫn bằng hình:** từng bước bật chế độ nhà phát triển, gỡ lỗi USB, lấy địa chỉ IP và cho phép máy tính kết nối với TV.
 - **Kết nối & kiểm tra:** đọc model, phiên bản Android, kiểm tra khả năng hỗ trợ; kết nối ADB trong mạng nội bộ và ghép nối bằng mã 6 số.
-- **Kho giao diện:** Ba theme cổ điển XP/Vista/macOS và ba theme Widgets tương ứng, kèm Free My TV mặc định trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
+- **Kho giao diện:** Bốn theme cổ điển XP/Vista/macOS/Ubuntu và bốn theme Widgets tương ứng, kèm Free My TV mặc định trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
 - **Sao lưu & khôi phục:** tự tạo backup trước khi thay đổi, có sao lưu thủ công; kiểm tra SHA-256 và chỉ khôi phục về đúng TV đã tạo bản sao.
 - **Home 3 lần:** nhấn Home liên tục 3 lần để đóng hẳn ứng dụng vừa dùng; bảo vệ launcher, bàn phím và dịch vụ hệ thống.
 - **Cài đặt nhanh:** âm thanh điều hướng, thành phố và đơn vị nhiệt độ, thời tiết / crypto trên theme mặc định, ngày giờ tự động; mở cài đặt mạng và Trợ năng trên TV.
@@ -87,7 +87,7 @@ BBI Legend TV được cung cấp theo hiện trạng, không bảo đảm phù 
 
 Trong phạm vi pháp luật cho phép và theo giấy phép MIT, tác giả không bảo đảm phần mềm không có lỗi và không chịu trách nhiệm đối với thiệt hại phát sinh từ việc sử dụng hoặc không thể sử dụng phần mềm. Nội dung này không loại trừ các quyền và trách nhiệm bắt buộc theo pháp luật áp dụng.
 
-Các giao diện XP, Vista và macOS là mẫu tùy biến lấy cảm hứng để tham khảo; không phải sản phẩm chính thức của Microsoft hoặc Apple và không thể hiện quan hệ liên kết, tài trợ hay bảo trợ. Tên gọi, nhãn hiệu, biểu tượng, hình nền và hình ảnh của bên thứ ba vẫn thuộc chủ sở hữu tương ứng. Giấy phép MIT của dự án không cấp quyền sử dụng các tài sản đó ngoài quyền mà chủ sở hữu cho phép. Việc gọi một giao diện là “tham khảo” không tự tạo ra quyền sử dụng hay miễn trừ nghĩa vụ bản quyền. Người dùng cần có quyền phù hợp khi sử dụng, sửa đổi hoặc phân phối lại tài sản của bên thứ ba.
+Các giao diện XP, Vista, macOS và Ubuntu là mẫu tùy biến lấy cảm hứng để tham khảo; không phải sản phẩm chính thức của Microsoft, Apple hoặc Canonical và không thể hiện quan hệ liên kết, tài trợ hay bảo trợ. Tên gọi, nhãn hiệu, biểu tượng, hình nền và hình ảnh của bên thứ ba vẫn thuộc chủ sở hữu tương ứng. Giấy phép MIT của dự án không cấp quyền sử dụng các tài sản đó ngoài quyền mà chủ sở hữu cho phép. Việc gọi một giao diện là “tham khảo” không tự tạo ra quyền sử dụng hay miễn trừ nghĩa vụ bản quyền. Người dùng cần có quyền phù hợp khi sử dụng, sửa đổi hoặc phân phối lại tài sản của bên thứ ba.
 
 Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòng gửi đường dẫn, mô tả và bằng chứng quyền sở hữu tới **info@bbimedia.vn** để BBI MEDIA xem xét, thay thế hoặc gỡ bỏ khi cần.
 
@@ -98,13 +98,13 @@ Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòn
 - **Home 3 lần:** cần ADB cổng 5555 và dịch vụ Trợ năng **BBI Legend TV — Đóng ứng dụng**. Khi bật tùy chọn và lưu/cài, công cụ bật dịch vụ này, giữ các dịch vụ Trợ năng khác. Buộc dừng sẽ ngắt phát nội dung và tác vụ nền của app cho đến khi mở lại.
 - **Backup:** lưu APK và các tùy chọn mà BBI Legend TV quản lý khi launcher hỗ trợ xuất cài đặt. Không bao gồm firmware, tài khoản, Wi-Fi hay dữ liệu các app khác; không sao lưu toàn bộ ánh xạ remote hoặc dữ liệu riêng của launcher. Bản launcher cũ không hỗ trợ xuất cài đặt chỉ được sao lưu APK. Giữ toàn bộ `data/backups/` khi chuyển sang máy khác.
 - **Khôi phục:** không xóa dữ liệu hoặc gỡ Free My TV trước khi restore. Công cụ kiểm tra đúng TV, kiểm tra toàn vẹn và tạo bản dự phòng trước khi khôi phục; nếu khác chữ ký APK sẽ dừng.
-- **Giao diện:** XP, Vista và macOS là các phong cách lấy cảm hứng, không cài hệ điều hành tương ứng lên TV. Gợi ý phim trên theme mặc định cần bản build có khóa TMDB riêng.
+- **Giao diện:** XP, Vista, macOS và Ubuntu là các phong cách lấy cảm hứng, không cài hệ điều hành tương ứng lên TV. Gợi ý phim trên theme mặc định cần bản build có khóa TMDB riêng.
 - **Kết nối:** API chỉ chấp nhận IP LAN thuộc các dải `10.x`, `172.16–31.x`, `192.168.x`. ADB ghép nối cổng động cần chuyển sang cổng 5555 để cơ chế tự kết nối của Free My TV hoạt động.
 - **Dữ liệu:** máy chủ chỉ lắng nghe `127.0.0.1`, kiểm tra token phiên và Host/Origin. Mã ghép nối chỉ giữ tạm trong bộ nhớ. Không đưa khóa ADB, khóa ký APK hoặc backup cá nhân lên repo.
 
-## Widgets — XP, Vista Aero và macOS
+## Widgets — XP, Vista Aero, macOS và Ubuntu
 
-**XP Widgets, Vista Widgets và macOS Widgets** dùng chung bộ widget và dữ liệu; Vista có khung Aero, macOS có thẻ bo góc, thanh menu và Dock kính. Theme XP cổ điển được giữ riêng. Trong **Kho giao diện**, chọn một theme **Widgets** rồi **Cài giao diện đã chọn** để cập nhật APK có theme mới. Vista/macOS Widgets có mã riêng từ APK **1.3.4** trở lên; XP Widgets cần 1.3-widgets trở lên. Sau khi nâng cấp, có thể dùng **Chỉ đổi theme**. Sau khi cài, widget chạy trực tiếp trên TV; không cần giữ máy tính mở.
+**XP Widgets, Vista Widgets, macOS Widgets và Ubuntu Widgets** dùng chung bộ widget và dữ liệu; Vista có khung Aero, macOS có thẻ bo góc, thanh menu và Dock kính, Ubuntu có cửa sổ Yaru sáng kèm nút đóng tròn, dải Dock trái và điểm nhấn cam. Các bản cổ điển được giữ riêng. Trong **Kho giao diện**, chọn một theme **Widgets** rồi **Cài giao diện đã chọn** để cập nhật APK có theme mới. Ubuntu/Ubuntu Widgets có mã riêng từ APK **1.3.7** trở lên; Vista/macOS Widgets từ **1.3.4** trở lên. Sau khi nâng cấp, có thể dùng **Chỉ đổi theme**. Sau khi cài, widget chạy trực tiếp trên TV; không cần giữ máy tính mở.
 
 - **Bố cục:** cột ứng dụng bên trái, sáu cửa sổ XP cho đồng hồ, thời tiết, lịch, bóng đá, vàng và chứng khoán; thanh Start ở dưới. Dùng remote để chọn, nhấn OK xem chi tiết; Back/Menu mở danh sách app.
 - **Thời gian & lịch:** giờ Việt Nam UTC+7, lịch dương theo tháng và lịch âm Việt Nam tính trên TV (1900–2099, có tháng nhuận). Nhấn OK vào lịch để xem từng ngày âm/dương, chuyển tháng.
@@ -173,7 +173,7 @@ Mã nguồn Free My TV giữ giấy phép [MIT của dự án gốc](LICENSE-Fre
 
 ## Ứng dụng & đầu vào trên TV
 
-Màn hình dùng chung cho cả sáu giao diện và Free My TV mặc định. Có icon, tên/package, nhóm ứng dụng/đầu vào, trạng thái và RAM PSS. OK mở app/đầu vào; giữ OK mở thông tin app; Back đóng danh sách. **Tắt** nghĩa là không thấy tiến trình mang tên package lúc làm mới, không phải app bị vô hiệu hóa. RAM là tổng PSS của các tiến trình tên package/package:worker tại thời điểm đo qua ADB nội bộ; có thể đổi ngay sau đó. Không đọc được sẽ ghi rõ thay vì giả số 0.
+Màn hình dùng chung cho cả tám giao diện và Free My TV mặc định. Có icon, tên/package, nhóm ứng dụng/đầu vào, trạng thái và RAM PSS. OK mở app/đầu vào; giữ OK mở thông tin app; Back đóng danh sách. **Tắt** nghĩa là không thấy tiến trình mang tên package lúc làm mới, không phải app bị vô hiệu hóa. RAM là tổng PSS của các tiến trình tên package/package:worker tại thời điểm đo qua ADB nội bộ; có thể đổi ngay sau đó. Không đọc được sẽ ghi rõ thay vì giả số 0.
 
 **Mạng** là lưu lượng Wi-Fi Android đã lưu trong tháng hiện tại (UTC+7), có tổng và tải xuống/tải lên theo UID; không phải dung lượng file/data/cache hay tốc độ mạng tức thời. Không gồm Ethernet/LAN hoặc di động trong bản này. Android có thể cập nhật trễ, thiếu lịch sử hoặc mất số liệu khi reset TV; không có bản ghi được ghi rõ. App dùng chung UID có số liệu gộp và nhãn riêng, không cộng chúng như các app độc lập.
 
@@ -183,7 +183,7 @@ Nguồn API: [Android NetworkStatsManager](https://developer.android.com/referen
 
 ## Thanh truy cập nhanh trên màn hình chính
 
-Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **Video**, **Ứng dụng** và **Cài đặt**. Thanh dùng phong cách tương ứng với theme: XP xanh cổ điển và viền nổi; Vista kính Aero; macOS kính sáng, chữ tối và bo góc. Màu khi chọn bằng remote cũng đồng bộ với từng phong cách, áp dụng cho cả bản cổ điển và bản widget. Màn hình chính chỉ giữ app, widget và các nút thao tác; tên dự án/theme và giới thiệu nằm trong Settings.
+Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **Video**, **Ứng dụng** và **Cài đặt**. Thanh dùng phong cách tương ứng với theme: XP xanh cổ điển và viền nổi; Vista kính Aero; macOS kính sáng, chữ tối và bo góc; Ubuntu thanh trên tối kiểu GNOME với nút pill và màu cam khi chọn. Màu khi chọn bằng remote cũng đồng bộ với từng phong cách, áp dụng cho cả bản cổ điển và bản widget. Màn hình chính chỉ giữ app, widget và các nút thao tác; tên dự án/theme và giới thiệu nằm trong Settings.
 
 - **Mạng:** tên Wi-Fi đang dùng (hoặc Ethernet/LAN), tốc độ tải xuống/tải lên toàn TV cập nhật khoảng mỗi giây. Dùng chênh lệch bộ đếm [Android TrafficStats](https://developer.android.com/reference/android/net/TrafficStats) theo thời gian thực đã trôi qua, không phải đo tốc độ tối đa của đường truyền; số liệu có thể gồm lưu lượng của dịch vụ nền. Bộ đếm không hỗ trợ/đang đổi mạng sẽ hiện dấu chờ. Khi TV không cho ứng dụng đọc SSID, thử đọc qua ADB nội bộ đã được cho phép, nếu vẫn không được thì ghi Wi-Fi. Không lưu tên mạng trong repo hoặc gửi ra máy chủ.
 - **Đổi nguồn:** TV/cáp/ăng-ten qua app Live TV, HDMI và các đầu vào passthrough như AV/component nếu firmware công bố. Không tạo mục cho cổng TV không hỗ trợ. Cáp/ăng-ten phụ thuộc app TV, bộ dò và thiết lập sẵn trên máy.
@@ -192,4 +192,4 @@ Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **V
 
 Ảnh trong kho theme là SVG minh họa bố cục, không phải số liệu mạng thực tế hoặc ảnh chụp riêng của người dùng.
 
-Tạo lại bảy thumbnail SVG bằng `python tools/generate_theme_previews.py`. Ảnh minh họa dùng số liệu chờ, không chứa tên mạng hoặc số liệu riêng của TV; nền và bố cục theo từng phong cách.
+Tạo lại chín thumbnail SVG bằng `python tools/generate_theme_previews.py`. Ảnh minh họa dùng số liệu chờ, không chứa tên mạng hoặc số liệu riêng của TV; nền và bố cục theo từng phong cách.

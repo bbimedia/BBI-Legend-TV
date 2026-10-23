@@ -21,11 +21,11 @@ final class HomeQuickBar extends LinearLayout {
     private final Click sound;
     private final Button network;
     private final float scale;
-    private final boolean xp,vista,mac;
+    private final boolean xp,vista,mac,ubuntu;
     private long rx=-1,tx=-1,at,lastName;
     private String name="Mạng";
     private boolean active,closed,querying;
-    HomeQuickBar(Activity a){super(a);activity=a;String theme=PortableControl.theme(a);xp=theme.startsWith("xp");vista=theme.startsWith("vista");mac=theme.startsWith("macos");sound=new Click(a);scale=a.getResources().getDisplayMetrics().widthPixels/1280f;setGravity(Gravity.CENTER_VERTICAL);setPadding(s(18),s(6),s(18),s(6));setBackground(barBackground());setElevation(s(mac?10:vista?8:3));
+    HomeQuickBar(Activity a){super(a);activity=a;String theme=PortableControl.theme(a);xp=theme.startsWith("xp");vista=theme.startsWith("vista");mac=theme.startsWith("macos");ubuntu=theme.startsWith("ubuntu");sound=new Click(a);scale=a.getResources().getDisplayMetrics().widthPixels/1280f;setGravity(Gravity.CENTER_VERTICAL);setPadding(s(18),s(6),s(18),s(6));setBackground(barBackground());setElevation(s(mac?10:vista?8:3));
         network=button("Mạng\n↓ —  ↑ —",()->openSettings(Settings.ACTION_WIFI_SETTINGS,Settings.ACTION_WIRELESS_SETTINGS));addView(network,new LayoutParams(0,-1,1));
         add("⇄  Đổi nguồn",170,()->AppCatalogActivity.open(a,true));
         add("▣  Video",145,()->openSettings(Settings.ACTION_DISPLAY_SETTINGS));
@@ -38,6 +38,7 @@ final class HomeQuickBar extends LinearLayout {
         if(xp)return gradient(0xff4e9eff,0xff0753cb,0,0xff8ec2ff);
         if(vista)return gradient(0xb385c6d1,0xda173445,10,0x999bdae7);
         if(mac)return gradient(0xebffffff,0xc9dce6f8,18,0xccffffff);
+        if(ubuntu)return gradient(0xf5141414,0xf50a0a0a,0,0x1fffffff);
         return gradient(0xe6223751,0xe6102035,0,0x334a6483);
     }
     private void styleButton(Button b,boolean focused){
@@ -45,6 +46,7 @@ final class HomeQuickBar extends LinearLayout {
         if(xp){top=focused?0xfffff4be:0xff4998ff;bottom=focused?0xffffc65b:0xff1461d1;stroke=focused?0xffffe59a:0xff86b9fb;ink=focused?0xff163a72:Color.WHITE;radius=4;}
         else if(vista){top=focused?0xffd2f8ff:0x557ad0e0;bottom=focused?0xff68bddc:0x55334f62;stroke=focused?0xffe3fcff:0x7795d0df;ink=focused?0xff123f58:0xfff3fbff;radius=7;}
         else if(mac){top=focused?0xff70a9f7:0x22ffffff;bottom=focused?0xff387bdc:0x11edf4ff;stroke=focused?0xffc3ddff:0x33596d90;ink=focused?Color.WHITE:0xff253c59;radius=12;}
+        else if(ubuntu){top=focused?0xfff0682f:0x1affffff;bottom=focused?0xffd9481a:0x0fffffff;stroke=focused?0xffff9f78:0x00ffffff;ink=focused?Color.WHITE:0xfff2f2f2;radius=18;}
         else{top=focused?0xffd7edff:0x553b5874;bottom=focused?0xffa8d4f4:0x55233a52;stroke=focused?0xffe7f5ff:0x33526e8d;ink=focused?0xff133c64:Color.WHITE;radius=9;}
         b.setBackground(gradient(top,bottom,radius,stroke));b.setTextColor(ink);b.setElevation(focused?s(mac?3:2):0);
     }

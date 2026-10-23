@@ -1,6 +1,6 @@
 "use strict";
 (() => {
-  const CURRENT = '1.3.6';
+  const CURRENT = '1.3.7';
   const DAY = 24 * 60 * 60 * 1000;
   const KEY = 'bbi-legend-updates-v1';
   function parts(value) {

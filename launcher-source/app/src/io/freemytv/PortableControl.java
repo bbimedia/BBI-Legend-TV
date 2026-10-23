@@ -13,7 +13,7 @@ import java.util.Arrays;
 public class PortableControl extends Activity {
     static String theme(Context c){try{return new String(new AtomicFile(new File(c.getFilesDir(),"launcher-theme")).readFully(),StandardCharsets.UTF_8).trim();}catch(IOException e){return "macos";}}
     private static void theme(Context c,String value)throws IOException{
-        if(!Arrays.asList("default","xp","xp-widgets","vista","macos","vista-widgets","macos-widgets").contains(value))throw new IOException("Unknown theme");
+        if(!Arrays.asList("default","xp","xp-widgets","vista","macos","vista-widgets","macos-widgets","ubuntu","ubuntu-widgets").contains(value))throw new IOException("Unknown theme");
         AtomicFile f=new AtomicFile(new File(c.getFilesDir(),"launcher-theme"));FileOutputStream out=f.startWrite();try{out.write(value.getBytes(StandardCharsets.UTF_8));f.finishWrite(out);}catch(IOException e){f.failWrite(out);throw e;}
         Prefs.version++;
     }
