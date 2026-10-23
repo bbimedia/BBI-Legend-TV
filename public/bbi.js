@@ -1,7 +1,7 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.1.1';
+  const VERSION = '1.2.0';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
     ['◈','Bốn diện mạo','Free My TV mặc định, XP, Vista và macOS trong cùng một bản cài.'],
@@ -11,6 +11,10 @@
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.2.0',date:'23/10/2026',title:'Thông báo phiên bản mới & thông tin sử dụng',highlights:[
+      {title:'Theo dõi GitHub Releases',desc:'Kiểm tra bản ổn định mới mỗi 24 giờ, có kiểm tra thủ công, công tắc tự động và liên kết tải; dùng bình thường khi mất mạng.'},
+      {title:'Thông tin tương thích và quyền sở hữu',desc:'Bổ sung giới hạn tương thích từng TV, phạm vi backup, miễn trừ trách nhiệm và quyền đối với hình ảnh, nhãn hiệu của bên thứ ba.'}
+    ]},
     {version:'v1.1.1',date:'22/10/2026',title:'BBI Legend TV · Nhận diện mới và không gian BBI MEDIA',highlights:[
       {title:'Tên gọi BBI Legend TV',desc:'Cập nhật tên ứng dụng web, logo, tiêu đề trình duyệt, hướng dẫn khởi chạy và gói portable.'},
       {title:'Giới thiệu BBI MEDIA',desc:'Tích hợp thiết kế nhận diện, thông tin liên hệ BBI MEDIA, cộng đồng Tôi là Vibe’r và mã VietQR ủng hộ.'},

@@ -81,6 +81,16 @@ python tools/package_portable.py
 
 Công cụ đóng gói tạo ZIP và file SHA-256 ở thư mục cha, loại dữ liệu máy phát triển, backup và khóa riêng. Xem [TESTING.md](TESTING.md) để biết phạm vi kiểm tra.
 
+## Miễn trừ trách nhiệm và quyền sở hữu
+
+BBI Legend TV được cung cấp theo hiện trạng, không bảo đảm phù hợp với mọi thiết bị. Model, firmware, phiên bản Android, remote và cấu hình mạng có thể tạo ra kết quả khác nhau. Người dùng cần kiểm tra tương thích, đọc hướng dẫn và sao lưu trước khi thay đổi. Backup của công cụ không phải bản sao toàn bộ hệ thống và không bảo đảm khôi phục mọi lỗi.
+
+Trong phạm vi pháp luật cho phép và theo giấy phép MIT, tác giả không bảo đảm phần mềm không có lỗi và không chịu trách nhiệm đối với thiệt hại phát sinh từ việc sử dụng hoặc không thể sử dụng phần mềm. Nội dung này không loại trừ các quyền và trách nhiệm bắt buộc theo pháp luật áp dụng.
+
+Các giao diện XP, Vista và macOS là mẫu tùy biến lấy cảm hứng để tham khảo; không phải sản phẩm chính thức của Microsoft hoặc Apple và không thể hiện quan hệ liên kết, tài trợ hay bảo trợ. Tên gọi, nhãn hiệu, biểu tượng, hình nền và hình ảnh của bên thứ ba vẫn thuộc chủ sở hữu tương ứng. Giấy phép MIT của dự án không cấp quyền sử dụng các tài sản đó ngoài quyền mà chủ sở hữu cho phép. Việc gọi một giao diện là “tham khảo” không tự tạo ra quyền sử dụng hay miễn trừ nghĩa vụ bản quyền. Người dùng cần có quyền phù hợp khi sử dụng, sửa đổi hoặc phân phối lại tài sản của bên thứ ba.
+
+Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòng gửi đường dẫn, mô tả và bằng chứng quyền sở hữu tới **info@bbimedia.vn** để BBI MEDIA xem xét, thay thế hoặc gỡ bỏ khi cần.
+
 ## Lưu ý
 
 - **Thiết bị hỗ trợ:** Hỗ trợ hầu hết các dòng Android TV (Google TV) hiện nay. Đã thử với Xiaomi MiTV-MOOR2 / Android 11. Khả năng tương thích còn phụ thuộc firmware và remote. TV chạy webOS hoặc Tizen không thuộc phạm vi công cụ này. Linux/macOS có file khởi chạy nhưng chưa chạy thực tế trên từng hệ điều hành; Linux ARM cần ADB phù hợp kiến trúc qua PATH hoặc `--adb`.
@@ -91,6 +101,12 @@ Công cụ đóng gói tạo ZIP và file SHA-256 ở thư mục cha, loại d�
 - **Giao diện:** XP, Vista và macOS là các phong cách lấy cảm hứng, không cài hệ điều hành tương ứng lên TV. Gợi ý phim trên theme mặc định cần bản build có khóa TMDB riêng.
 - **Kết nối:** API chỉ chấp nhận IP LAN thuộc các dải `10.x`, `172.16–31.x`, `192.168.x`. ADB ghép nối cổng động cần chuyển sang cổng 5555 để cơ chế tự kết nối của Free My TV hoạt động.
 - **Dữ liệu:** máy chủ chỉ lắng nghe `127.0.0.1`, kiểm tra token phiên và Host/Origin. Mã ghép nối chỉ giữ tạm trong bộ nhớ. Không đưa khóa ADB, khóa ký APK hoặc backup cá nhân lên repo.
+
+## Thông báo phiên bản mới
+
+Ứng dụng kiểm tra bản Release ổn định mới nhất tại repo BBI Legend TV khi mở, tối đa một lần mỗi 24 giờ, và kiểm tra lại khi đang mở lâu. Có nút **Kiểm tra cập nhật** và công tắc tự kiểm tra trong **Cài đặt nhanh**. Khi có bản mới, thông báo có liên kết xem thay đổi / tải xuống và nút Để sau. Không tự tải hoặc cài đặt. Push code thông thường không kích hoạt thông báo; cần phát hành GitHub Release mới.
+
+Kiểm tra cập nhật kết nối trực tiếp tới API GitHub công khai, không gửi IP TV, backup hoặc tài khoản TV; GitHub vẫn nhận thông tin kết nối Internet thông thường. Có thể tắt tự kiểm tra. Mất mạng hoặc GitHub giới hạn truy cập không ảnh hưởng chức năng TV. Tùy chọn và thời điểm kiểm tra lưu trong trình duyệt đang dùng.
 
 ## Cộng đồng
 

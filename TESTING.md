@@ -9,3 +9,11 @@
 
 Run: `python -m unittest discover -s tests -v`.
 
+
+## v1.2.0 — thông báo cập nhật
+
+- `node tests/test_updates.cjs`: so sánh phiên bản số, loại prerelease/draft, cố định liên kết về repo chính thức; kiểm tra tự động/thủ công, cache 24 giờ, Để sau, tắt tự kiểm tra và lỗi mạng.
+- 20 kiểm tra backend tiếp tục đạt.
+- Trình duyệt tại localhost: kiểm tra thủ công gọi GitHub Releases thành công, hiển thị trạng thái phiên bản hiện tại và công tắc tự kiểm tra. CSP chỉ bổ sung kết nối đến `https://api.github.com`.
+- README mới nhất của chủ repo được kéo về trước khi chỉnh. Thông tin trách nhiệm và quyền tài sản có trong README, DISCLAIMER.md và trang Giới thiệu.
+- Không thay APK hoặc thao tác TV trong bản cập nhật này. Bản cũ trước v1.2.0 cần nâng cấp thủ công một lần để có tính năng thông báo.

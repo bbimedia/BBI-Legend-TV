@@ -506,7 +506,7 @@ class Studio:
 
 def make_handler(studio, token):
     class Handler(BaseHTTPRequestHandler):
-        server_version = 'BBILegendTV/1.1'
+        server_version = 'BBILegendTV/1.2'
         def log_message(self, *_args):
             pass
         def valid_host(self):
@@ -522,7 +522,7 @@ def make_handler(studio, token):
             self.send_header('Cache-Control', 'no-store' if '/api/' in self.path else 'no-cache')
             self.send_header('X-Content-Type-Options', 'nosniff')
             self.send_header('Referrer-Policy', 'no-referrer')
-            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' blob: data:; style-src 'self'; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'none'")
+            self.send_header('Content-Security-Policy', "default-src 'self'; img-src 'self' blob: data:; style-src 'self'; script-src 'self'; connect-src 'self' https://api.github.com; frame-ancestors 'none'; base-uri 'none'")
             self.end_headers()
             self.wfile.write(body)
         def do_GET(self):
