@@ -183,7 +183,7 @@ Nguồn API: [Android NetworkStatsManager](https://developer.android.com/referen
 
 ## Thanh truy cập nhanh trên màn hình chính
 
-Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **Video**, **Ứng dụng** và **Cài đặt**. Màn hình chính chỉ giữ app, widget và các nút thao tác; tên dự án/theme và giới thiệu nằm trong Settings.
+Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **Video**, **Ứng dụng** và **Cài đặt**. Thanh dùng phong cách tương ứng với theme: XP xanh cổ điển và viền nổi; Vista kính Aero; macOS kính sáng, chữ tối và bo góc. Màu khi chọn bằng remote cũng đồng bộ với từng phong cách, áp dụng cho cả bản cổ điển và bản widget. Màn hình chính chỉ giữ app, widget và các nút thao tác; tên dự án/theme và giới thiệu nằm trong Settings.
 
 - **Mạng:** tên Wi-Fi đang dùng (hoặc Ethernet/LAN), tốc độ tải xuống/tải lên toàn TV cập nhật khoảng mỗi giây. Dùng chênh lệch bộ đếm [Android TrafficStats](https://developer.android.com/reference/android/net/TrafficStats) theo thời gian thực đã trôi qua, không phải đo tốc độ tối đa của đường truyền; số liệu có thể gồm lưu lượng của dịch vụ nền. Bộ đếm không hỗ trợ/đang đổi mạng sẽ hiện dấu chờ. Khi TV không cho ứng dụng đọc SSID, thử đọc qua ADB nội bộ đã được cho phép, nếu vẫn không được thì ghi Wi-Fi. Không lưu tên mạng trong repo hoặc gửi ra máy chủ.
 - **Đổi nguồn:** TV/cáp/ăng-ten qua app Live TV, HDMI và các đầu vào passthrough như AV/component nếu firmware công bố. Không tạo mục cho cổng TV không hỗ trợ. Cáp/ăng-ten phụ thuộc app TV, bộ dò và thiết lập sẵn trên máy.
@@ -191,3 +191,5 @@ Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **V
 - **Ứng dụng/Cài đặt:** vào trình quản lý app/đầu vào chung và Settings BBI Legend TV. Việc theo dõi mạng chỉ chạy khi màn hình chính đang hoạt động.
 
 Ảnh trong kho theme là SVG minh họa bố cục, không phải số liệu mạng thực tế hoặc ảnh chụp riêng của người dùng.
+
+Tạo lại bảy thumbnail SVG bằng `python tools/generate_theme_previews.py`. Ảnh minh họa dùng số liệu chờ, không chứa tên mạng hoặc số liệu riêng của TV; nền và bố cục theo từng phong cách.

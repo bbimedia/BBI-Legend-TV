@@ -1,5 +1,17 @@
 # Verification
 
+## v1.3.6 — Thumbnail và skin thanh menu
+
+- Tạo lại đủ bảy SVG minh họa từ công cụ Python chuẩn: nền, app, Dock/Sidebar/widget và thanh menu theo từng phong cách; không có SSID/số liệu riêng. Kiểm tra XML/viewBox của bảy ảnh, xem thực tế trong trình duyệt cả phần trên và phần dưới kho giao diện.
+- Số lượng kho tự tính từ danh sách theme (07), cả Tổng quan và Kho giao diện dùng ảnh mới có mã cache 1.3.6. Cú pháp JavaScript và bộ kiểm thử cập nhật Node qua.
+- Bao gồm skin thanh menu native đã biên dịch và xem trên TV trong lượt sửa trước; đóng lại APK với metadata 1.3.6, cùng bytecode đã kiểm tra và chữ ký được xác minh. Không thêm quyền hoặc thay đổi chức năng thống kê mạng.
+
+## Local sau v1.3.5 — Thanh trên theo theme
+
+- Đổi màu gradient, viền, bo góc, kiểu chữ, độ trong và trạng thái focus cho XP/Vista/macOS, chọn cùng skin cho bản cổ điển/widget. Vista/macOS có lề và thanh kính bo góc, XP giữ thanh xanh sát cạnh.
+- Biên dịch APK và xác minh chữ ký; sao lưu trước cài. Đã xem ảnh thật của cả ba bản widget trên Xiaomi Android 11: chữ và nền đúng tương phản, không chồng lên widget; TV đang ở macOS Widgets. Không thay đổi hành vi mạng/nguồn/Video.
+- Cập nhật sáu SVG minh họa trong web theo skin mới. Chỉ lưu local và cài trên TV; chưa commit/push hoặc cập nhật file ZIP đã phát hành.
+
 ## v1.3.5 — Màn hình chính gọn và truy cập nhanh
 
 - Biên dịch/xác minh chữ ký APK; 21 kiểm thử backend, Node update tests và Java AppMetricsTest đều qua. Thêm kiểm tra tốc độ theo thời gian trôi thực tế, bộ đếm không hỗ trợ/reset và khoảng thời gian không hợp lệ.

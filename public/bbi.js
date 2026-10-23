@@ -1,7 +1,7 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.3.5';
+  const VERSION = '1.3.6';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
     ['◈','Sáu phong cách + mặc định','XP, Vista, macOS bản cổ điển và bản widget, kèm Free My TV mặc định.'],
@@ -11,6 +11,7 @@
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.3.6',date:'23/10/2026',title:'Thanh menu theo theme và thumbnail đồng bộ',highlights:[{title:'XP, Aero và kính sáng',desc:'Thanh truy cập nhanh có gradient, viền, bo góc và màu focus riêng theo XP/Vista/macOS, áp dụng cả bản cổ điển và widget.'},{title:'Đủ bảy thumbnail mới',desc:'Cập nhật hình nền, bố cục app/widget và thanh menu tương ứng trong kho theme. Ảnh SVG minh họa, không có tên mạng riêng.'},{title:'Kho giao diện đồng bộ',desc:'Số lượng tự tính theo danh sách theme, cập nhật ảnh ở cả Tổng quan và Kho giao diện; đổi mã ảnh để tránh cache cũ.'}]},
     {version:'v1.3.5',date:'23/10/2026',title:'Màn hình chính gọn và thanh truy cập nhanh',highlights:[{title:'Chỉ app và widget',desc:'Bỏ tên BBI, tên theme, cửa sổ giới thiệu và chữ trang trí khỏi màn hình chính. Thông tin dự án giữ trong Settings.'},{title:'Mạng và tốc độ thực tế',desc:'Thanh trên có tên mạng đang dùng và lưu lượng toàn TV cập nhật mỗi giây; bấm để vào cài đặt mạng.'},{title:'Nguồn và hình ảnh',desc:'Truy cập nhanh TV/cáp/HDMI/AV theo đầu vào TV hỗ trợ, chỉnh Video/hình ảnh, ứng dụng và cài đặt.'}]},
     {version:'v1.3.4',date:'23/10/2026',title:'Ứng dụng & đầu vào thống nhất trên sáu giao diện',highlights:[{title:'Icon, trạng thái và RAM',desc:'Danh sách app/đầu vào dùng chung, icon và tên rõ ràng; đo RAM PSS theo tiến trình tại thời điểm làm mới.'},{title:'Lưu lượng mạng theo app',desc:'Lịch sử Wi-Fi tháng này: tổng, tải xuống và tải lên theo UID; bật quyền đọc thống kê ngay trên TV. Không phải dung lượng lưu trữ.'},{title:'Ba bản cổ điển + ba bản widget',desc:'XP, Vista và macOS đều có lựa chọn cổ điển/widget riêng; giữ Free My TV mặc định và cấu hình hiện có.'}]},
     {version:'v1.3.3',date:'23/10/2026',title:'Vista và macOS có bộ widget đầy đủ',highlights:[{title:'Widgets đồng bộ',desc:'Thời gian, thời tiết, lịch âm/dương, lịch bóng đá kèm kênh, giá vàng và chứng khoán dùng chung dữ liệu với XP Widgets.'},{title:'Phong cách riêng',desc:'Vista Aero và macOS với thẻ bo góc, menu và Dock kính. Giữ âm thanh điều hướng, Home 3 lần và cấu hình hiện có.'},{title:'Settings cân đối',desc:'Căn giữa khối thông tin và donate bên trái; bỏ bảng Comparison.'}]},

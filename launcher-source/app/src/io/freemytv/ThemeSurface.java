@@ -14,7 +14,7 @@ final class ThemeSurface extends FrameLayout {
         String theme=PortableControl.theme(a);
         surface=theme.endsWith("-widgets")?new WidgetHomeView(a,theme):"xp".equals(theme)?new XpHomeView(a):"vista".equals(theme)?new VistaHomeView(a):"macos".equals(theme)?new MacHomeView(a):new HomeView(a);
         LayoutParams body=new LayoutParams(-1,-1);if(surface instanceof HomeView)body.topMargin=Math.round(64*a.getResources().getDisplayMetrics().widthPixels/1280f);addView(surface,body);
-        quickBar=new HomeQuickBar(a);addView(quickBar,new LayoutParams(-1,Math.round(64*a.getResources().getDisplayMetrics().widthPixels/1280f)));
+        quickBar=new HomeQuickBar(a);float barScale=a.getResources().getDisplayMetrics().widthPixels/1280f;boolean glass=theme.startsWith("macos")||theme.startsWith("vista");LayoutParams barParams=new LayoutParams(-1,Math.round((glass?56:64)*barScale));if(glass){barParams.leftMargin=barParams.rightMargin=Math.round(12*barScale);barParams.topMargin=Math.round(5*barScale);}addView(quickBar,barParams);
     }
     void resume(){quickBar.resume();if(surface instanceof HomeView)((HomeView)surface).resume();else if(surface instanceof XpHomeView)((XpHomeView)surface).resume();else if(surface instanceof VistaHomeView)((VistaHomeView)surface).resume();else if(surface instanceof WidgetHomeView)((WidgetHomeView)surface).resume();else ((MacHomeView)surface).resume();}
     void pause(){quickBar.pause();if(surface instanceof HomeView)((HomeView)surface).pause();else if(surface instanceof XpHomeView)((XpHomeView)surface).pause();else if(surface instanceof VistaHomeView)((VistaHomeView)surface).pause();else if(surface instanceof WidgetHomeView)((WidgetHomeView)surface).pause();else ((MacHomeView)surface).pause();}
