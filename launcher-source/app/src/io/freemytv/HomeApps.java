@@ -243,7 +243,7 @@ final class HomeApps {
     /** For the bottom drawer: live TV and every HDMI input (the ones with no device are shown dimmed). */
     static List<Item> allInputs(Context c) {
         List<Item> items = new ArrayList<>();
-        if (liveTv(c) != null) items.add(shortcut(LIVE_TV, "live", Ui.tr("TV ao Vivo", "Live TV"), "tv"));
+        if (liveTv(c) != null) items.add(shortcut(LIVE_TV, "live", "TV / Cáp / Ăng-ten", "tv"));
         items.addAll(inputs(c, true));
         return items;
     }
@@ -267,7 +267,7 @@ final class HomeApps {
         Map<String, String> devices = new HashMap<>();
         try {
             for (TvInputInfo info : tim.getTvInputList()) {
-                if (info.getType() != TvInputInfo.TYPE_HDMI) continue;
+                if (!info.isPassthroughInput()) continue;
                 if (info.getParentId() == null) {
                     list.add(info);
                 } else {
@@ -299,10 +299,10 @@ final class HomeApps {
             }
             String reported = devices.containsKey(info.getId()) ? devices.get(info.getId()) : "";
             String label = custom != null && custom.length() > 0 ? custom.toString()
-                    : !reported.isEmpty() && state == TvInputManager.INPUT_STATE_CONNECTED ? reported : "HDMI " + number;
+                    : !reported.isEmpty() && state == TvInputManager.INPUT_STATE_CONNECTED ? reported : info.getType()==TvInputInfo.TYPE_HDMI ? "HDMI " + number : String.valueOf(info.loadLabel(c));
             String symbol = state == TvInputManager.INPUT_STATE_CONNECTED || custom != null
                     ? deviceSymbol(label) : "hdmi";
-            Item it = shortcut(INPUT, "hdmi" + number, label, symbol);
+            Item it = shortcut(INPUT, info.getId(), label, symbol);
             it.inputId = info.getId();
             it.number = String.valueOf(number);
             it.connected = state == TvInputManager.INPUT_STATE_CONNECTED;

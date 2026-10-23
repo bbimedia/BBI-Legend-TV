@@ -7,8 +7,8 @@ final class ThemeWallpaper {
     boolean draw(Canvas c,String theme,float width,float height){
         p.reset();p.setAntiAlias(true);p.setColor(Color.WHITE);
         if("xp".equals(theme))xp(c,width,height);
-        else if("vista".equals(theme))vista(c,width,height);
-        else if("macos".equals(theme))macos(c,width,height);
+        else if("vista".equals(theme)||"vista-widgets".equals(theme))vista(c,width,height);
+        else if("macos".equals(theme)||"macos-widgets".equals(theme))macos(c,width,height);
         else if("xp-widgets".equals(theme))xp_widgets(c,width,height);
         else return false;
         return true;

@@ -15,7 +15,9 @@ from server import Studio, StudioError, validate_endpoint, validated_config, mak
 
 class ValidationTests(unittest.TestCase):
     def test_xp_widgets_theme(self):
-        self.assertEqual(validated_config({'theme': 'xp-widgets'}), {'theme': 'xp-widgets'})
+        for theme in ('xp', 'vista', 'macos', 'xp-widgets', 'vista-widgets', 'macos-widgets', 'default'):
+            with self.subTest(theme=theme):
+                self.assertEqual(validated_config({'theme': theme}), {'theme': theme})
 
     def test_private_endpoints(self):
         self.assertEqual(validate_endpoint('192.168.1.211'), '192.168.1.211:5555')

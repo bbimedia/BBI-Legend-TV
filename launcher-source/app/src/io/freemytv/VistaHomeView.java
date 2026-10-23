@@ -36,11 +36,11 @@ final class VistaHomeView extends android.widget.FrameLayout {
         scale = a.getResources().getDisplayMetrics().widthPixels / 1280f;
         addView(new Wallpaper(a), new LayoutParams(-1,-1));
         desktop = new LinearLayout(a); desktop.setOrientation(LinearLayout.VERTICAL);
-        LayoutParams dp = new LayoutParams(s(220), -2); dp.leftMargin=s(38); dp.topMargin=s(42); addView(desktop,dp);
+        LayoutParams dp = new LayoutParams(s(220), -2); dp.leftMargin=s(38); dp.topMargin=s(85); addView(desktop,dp);
 
         LinearLayout window = new LinearLayout(a); window.setOrientation(LinearLayout.VERTICAL);
         window.setPadding(s(4),s(4),s(4),s(4)); window.setBackground(bg(0xb84b737d,0xe51b303d,10));
-        LayoutParams wp = new LayoutParams(s(720),s(450), Gravity.CENTER); wp.leftMargin=s(30); wp.bottomMargin=s(38); addView(window,wp);
+        LayoutParams wp = new LayoutParams(s(720),s(450), Gravity.CENTER); wp.leftMargin=s(30); wp.bottomMargin=s(38); addView(window,wp);window.setVisibility(GONE);
         LinearLayout bar = new LinearLayout(a); bar.setGravity(Gravity.CENTER_VERTICAL); bar.setPadding(s(12),0,s(8),0);
         bar.setBackground(bg(0x998eacb8,0xb51c3545,7));
         title = text("Windows Media Center",25,Color.WHITE,true); bar.addView(title,new LinearLayout.LayoutParams(0,s(48),1));
@@ -64,7 +64,7 @@ final class VistaHomeView extends android.widget.FrameLayout {
         start.setBackground(orb()); start.setOnFocusChangeListener((v,f)->v.setAlpha(f?1f:0.86f)); start.setOnClickListener(v->toggleStart());
         taskbar.addView(start,new LinearLayout.LayoutParams(s(72),s(54)));
         TextView task=text("  ▣  Windows Media Center",18,Color.WHITE,true); task.setBackground(bg(0x995d869c,0xc6274358,5));
-        LinearLayout.LayoutParams taskp=new LinearLayout.LayoutParams(s(250),s(40)); taskp.leftMargin=s(14); taskbar.addView(task,taskp);
+        LinearLayout.LayoutParams taskp=new LinearLayout.LayoutParams(s(250),s(40)); taskp.leftMargin=s(14); taskbar.addView(task,taskp);task.setVisibility(GONE);
         View spacer=new View(a); taskbar.addView(spacer,new LinearLayout.LayoutParams(0,1,1));
         clock=text("",19,Color.WHITE,false); clock.setGravity(Gravity.CENTER); clock.setBackground(bg(0x883f657a,0x99122b3b,0)); taskbar.addView(clock,new LinearLayout.LayoutParams(s(142),-1));
 
@@ -79,11 +79,11 @@ final class VistaHomeView extends android.widget.FrameLayout {
             handler.post(()->{if(!alive)return; apps.addAll(items); populateDesktop();});
         });
         LinearLayout sidebar=new LinearLayout(a); sidebar.setOrientation(LinearLayout.VERTICAL); sidebar.setPadding(s(16),s(18),s(16),s(18)); sidebar.setBackground(bg(0x66557584,0xbb102536,10));
-        LayoutParams sp=new LayoutParams(s(206),s(425),Gravity.RIGHT|Gravity.TOP);sp.rightMargin=s(26);sp.topMargin=s(65);addView(sidebar,sp);
-        TextView gadget=text("Windows Sidebar",18,0xffd7efff,true);sidebar.addView(gadget);
+        LayoutParams sp=new LayoutParams(s(206),s(425),Gravity.RIGHT|Gravity.TOP);sp.rightMargin=s(26);sp.topMargin=s(85);addView(sidebar,sp);
+        TextView gadget=text("Windows Sidebar",18,0xffd7efff,true);gadget.setVisibility(GONE);sidebar.addView(gadget);
         sidebar.addView(new AnalogClock(a),new LinearLayout.LayoutParams(-1,s(170)));
         TextView day=text(new SimpleDateFormat("EEEE\ndd MMMM",Locale.ENGLISH).format(new Date()),24,Color.WHITE,true);day.setGravity(Gravity.CENTER);day.setPadding(0,s(14),0,s(14));sidebar.addView(day);
-        TextView note=text("XIAOMI TV\n\nAero desktop\nReady to play",18,0xffc5e5f5,false);note.setGravity(Gravity.CENTER);sidebar.addView(note);
+        TextView note=text("XIAOMI TV\n\nAero desktop\nReady to play",18,0xffc5e5f5,false);note.setGravity(Gravity.CENTER);note.setVisibility(GONE);sidebar.addView(note);
         setFocusable(false);
     }
     private int s(float n){return Math.round(n*scale);}
@@ -98,11 +98,8 @@ final class VistaHomeView extends android.widget.FrameLayout {
         icon.setOnFocusChangeListener((v,f)->v.setBackgroundColor(f?0x886fbadd:Color.TRANSPARENT));icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(172),s(108)));if(firstDesktop==null)firstDesktop=icon;
     }if(firstDesktop!=null)firstDesktop.requestFocus();}
     private void launch(HomeApps.Item it){click.open();HomeApps.open(activity,it,this,0,0,getWidth(),getHeight());}
-    private void showPrograms(boolean inputs){LinearLayout list=new LinearLayout(activity);list.setOrientation(LinearLayout.VERTICAL);list.setPadding(s(12),s(8),s(12),s(8));scroll.removeAllViews();scroll.addView(list);
-        java.util.List<HomeApps.Item> entries=new ArrayList<>();if(inputs)entries.addAll(HomeApps.allInputs(activity));else{entries.addAll(apps);entries.add(HomeApps.action(HomeApps.ANDROID_SETTINGS,"tv-settings","TV Settings","settings"));}
-        for(HomeApps.Item it:entries){Button b=button(it.label,false);b.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,s(53));p.bottomMargin=s(4);list.addView(b,p);b.setOnClickListener(v->launch(it));}
-        if(entries.isEmpty())list.addView(text("No HDMI inputs available",20,0xff333333,false));popup.setVisibility(VISIBLE);if(list.getChildCount()>0)list.getChildAt(0).requestFocus();}
-    private void toggleStart(){if(popup.getVisibility()==VISIBLE){popup.setVisibility(GONE);start.requestFocus();}else showPrograms(false);}
+    private void showPrograms(boolean inputs){click.open();AppCatalogActivity.open(activity,inputs);}
+    private void toggleStart(){showPrograms(false);}
     void resume(){handler.removeCallbacks(tick);tick.run();}
     void pause(){handler.removeCallbacks(tick);}
     void destroy(){getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}

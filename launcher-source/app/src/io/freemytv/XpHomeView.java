@@ -36,11 +36,11 @@ final class XpHomeView extends android.widget.FrameLayout {
         scale = a.getResources().getDisplayMetrics().widthPixels / 1280f;
         addView(new Wallpaper(a), new LayoutParams(-1,-1));
         desktop = new LinearLayout(a); desktop.setOrientation(LinearLayout.VERTICAL);
-        LayoutParams dp = new LayoutParams(s(220), -2); dp.leftMargin=s(38); dp.topMargin=s(42); addView(desktop,dp);
+        LayoutParams dp = new LayoutParams(s(220), -2); dp.leftMargin=s(38); dp.topMargin=s(85); addView(desktop,dp);
 
         LinearLayout window = new LinearLayout(a); window.setOrientation(LinearLayout.VERTICAL);
         window.setPadding(s(4),s(4),s(4),s(4)); window.setBackground(bg(0xff0755df,0xff003bb5,8));
-        LayoutParams wp = new LayoutParams(s(820),s(480), Gravity.CENTER); wp.leftMargin=s(150); wp.bottomMargin=s(38); addView(window,wp);
+        LayoutParams wp = new LayoutParams(s(820),s(480), Gravity.CENTER); wp.leftMargin=s(150); wp.bottomMargin=s(38); addView(window,wp);window.setVisibility(GONE);
         LinearLayout bar = new LinearLayout(a); bar.setGravity(Gravity.CENTER_VERTICAL); bar.setPadding(s(12),0,s(8),0);
         bar.setBackground(bg(0xff4097ff,0xff0051da,5));
         title = text("My Television",25,Color.WHITE,true); bar.addView(title,new LinearLayout.LayoutParams(0,s(48),1));
@@ -64,7 +64,7 @@ final class XpHomeView extends android.widget.FrameLayout {
         start.setBackground(bg(0xff68b75b,0xff23772c,9)); start.setOnFocusChangeListener((v,f)->v.setAlpha(f?1f:0.86f)); start.setOnClickListener(v->toggleStart());
         taskbar.addView(start,new LinearLayout.LayoutParams(s(156),-1));
         TextView task=text("  ▣  My Television",18,Color.WHITE,true); task.setBackground(bg(0xff5299f6,0xff2670db,3));
-        LinearLayout.LayoutParams taskp=new LinearLayout.LayoutParams(s(250),s(40)); taskp.leftMargin=s(14); taskbar.addView(task,taskp);
+        LinearLayout.LayoutParams taskp=new LinearLayout.LayoutParams(s(250),s(40)); taskp.leftMargin=s(14); taskbar.addView(task,taskp);task.setVisibility(GONE);
         View spacer=new View(a); taskbar.addView(spacer,new LinearLayout.LayoutParams(0,1,1));
         clock=text("",19,Color.WHITE,false); clock.setGravity(Gravity.CENTER); clock.setBackground(bg(0xff22bafa,0xff078de3,0)); taskbar.addView(clock,new LinearLayout.LayoutParams(s(142),-1));
 
@@ -92,11 +92,8 @@ final class XpHomeView extends android.widget.FrameLayout {
         icon.setOnFocusChangeListener((v,f)->v.setBackgroundColor(f?0x99316ac5:Color.TRANSPARENT));icon.setOnClickListener(v->launch(it));desktop.addView(icon,new LinearLayout.LayoutParams(s(172),s(108)));if(firstDesktop==null)firstDesktop=icon;
     }if(firstDesktop!=null)firstDesktop.requestFocus();}
     private void launch(HomeApps.Item it){click.open();HomeApps.open(activity,it,this,0,0,getWidth(),getHeight());}
-    private void showPrograms(boolean inputs){LinearLayout list=new LinearLayout(activity);list.setOrientation(LinearLayout.VERTICAL);list.setPadding(s(12),s(8),s(12),s(8));scroll.removeAllViews();scroll.addView(list);
-        java.util.List<HomeApps.Item> entries=new ArrayList<>();if(inputs)entries.addAll(HomeApps.allInputs(activity));else{entries.addAll(apps);entries.add(HomeApps.action(HomeApps.ANDROID_SETTINGS,"tv-settings","TV Settings","settings"));}
-        for(HomeApps.Item it:entries){Button b=button(it.label,false);b.setGravity(Gravity.LEFT|Gravity.CENTER_VERTICAL);LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(-1,s(53));p.bottomMargin=s(4);list.addView(b,p);b.setOnClickListener(v->launch(it));}
-        if(entries.isEmpty())list.addView(text("No HDMI inputs available",20,0xff333333,false));popup.setVisibility(VISIBLE);if(list.getChildCount()>0)list.getChildAt(0).requestFocus();}
-    private void toggleStart(){if(popup.getVisibility()==VISIBLE){popup.setVisibility(GONE);start.requestFocus();}else showPrograms(false);}
+    private void showPrograms(boolean inputs){click.open();AppCatalogActivity.open(activity,inputs);}
+    private void toggleStart(){showPrograms(false);}
     void resume(){handler.removeCallbacks(tick);tick.run();}
     void pause(){handler.removeCallbacks(tick);}
     void destroy(){getViewTreeObserver().removeOnGlobalFocusChangeListener(focusSound);click.release();alive=false;handler.removeCallbacksAndMessages(null);loader.shutdownNow();}

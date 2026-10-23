@@ -28,7 +28,7 @@ PKG = 'io.freemytv'
 EXPORT = '/sdcard/Android/data/io.freemytv/files/portable-export.json'
 IMPORT = '/sdcard/Android/data/io.freemytv/files/portable-import.json'
 SERVICE = 'io.freemytv/io.freemytv.QuickCloseService'
-THEMES = {'default', 'xp', 'xp-widgets', 'vista', 'macos'}
+THEMES = {'default', 'xp', 'xp-widgets', 'vista', 'macos', 'vista-widgets', 'macos-widgets'}
 SAFE_SYSTEM_APPS = {'com.google.android.youtube.tv', 'com.android.vending', 'com.netflix.ninja',
                     'com.amazon.amazonvideo.livingroom', 'com.google.android.videos', 'com.spotify.tv.android'}
 PKG_RE = re.compile(r'[A-Za-z0-9_]+(?:\.[A-Za-z0-9_]+)+\Z')
@@ -506,7 +506,7 @@ class Studio:
 
 def make_handler(studio, token):
     class Handler(BaseHTTPRequestHandler):
-        server_version = 'BBILegendTV/1.3.2'
+        server_version = 'BBILegendTV/1.3.5'
         def log_message(self, *_args):
             pass
         def valid_host(self):

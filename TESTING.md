@@ -1,5 +1,28 @@
 # Verification
 
+## v1.3.5 — Màn hình chính gọn và truy cập nhanh
+
+- Biên dịch/xác minh chữ ký APK; 21 kiểm thử backend, Node update tests và Java AppMetricsTest đều qua. Thêm kiểm tra tốc độ theo thời gian trôi thực tế, bộ đếm không hỗ trợ/reset và khoảng thời gian không hợp lệ.
+- Cài trên Xiaomi MiTV-MOOR2 Android 11, backup trước nâng cấp. Kiểm tra UI thật cho XP/Vista/macOS cổ điển, ba bản widget và Free My TV mặc định: không còn chữ BBI/tên theme/cửa sổ giới thiệu; có nút mạng, đổi nguồn và Video. Xem ảnh thực Vista cổ điển và macOS Widgets.
+- Xác nhận tên Wi-Fi đang dùng và up/down cập nhật từ bộ đếm toàn TV. Không chạy bài đo băng thông hoặc suy ra tốc độ gói mạng. Nhấn Mạng mở NetworkActivity; Video mở partnercustomizer.picture.PictureActivity. Chỉ mở trang, không thay đổi kết nối/thông số ảnh.
+- Nút đổi nguồn hiển thị TV/Cáp/Ăng-ten, AV và HDMI 1–3 do TV cung cấp. Không chuyển sang nguồn đang trống khi kiểm tra. Firmware khác có thể trả loại đầu vào/trang cài đặt khác.
+- Ảnh public dùng SVG minh họa, không đưa tên Wi-Fi/ảnh riêng lên repo. Backup, cấu hình và khóa ký không nằm trong gói portable.
+
+## v1.3.4 local — Danh sách ứng dụng và lưu lượng mạng
+
+- Biên dịch và xác minh chữ ký APK; 21 kiểm thử backend qua (bao gồm cả bảy mã theme); AppMetricsTest qua với nhóm process, nhiều process, PSS table/summary, từ chối quyền/không có dữ liệu và đơn vị byte. Kiểm tra cú pháp JS và bộ kiểm thử cập nhật Node qua.
+- Cài thực tế trên Xiaomi MiTV-MOOR2 Android 11, backup trước nâng cấp. Mở bằng phím Menu trên cả XP/Vista/macOS cổ điển và XP/Vista/macOS Widgets: đều vào AppCatalogActivity có icon/tên, trạng thái, RAM và lịch sử mạng; bộ lọc đầu vào không dùng số RAM/mạng của ứng dụng. Kiểm tra thêm mở thẳng HDMI Inputs từ Vista vào bộ lọc đầu vào ngay lúc tạo activity.
+- Bật GET_USAGE_STATS bằng nút trên TV. NetworkStatsManager trả số liệu Wi-Fi tháng hiện tại theo UID: tổng/tải xuống/tải lên; ảnh chụp có số liệu thực và mốc thời gian, không có giá trị mẫu. Các app không có bản ghi được ghi rõ; UI chú thích số liệu UID dùng chung và không bao gồm LAN/di động.
+- RAM đọc dumpsys meminfo từng PID qua ADB nội bộ; ps cung cấp snapshot tiến trình. Đã kiểm tra trạng thái có tiến trình và không có tiến trình; chữ trạng thái không tràn cột. Mạng và RAM có thể trễ/thay đổi; chỉ kiểm tra đầy đủ trên model TV này.
+- Free My TV mặc định cũng dùng trình duyệt app chung qua All Apps (đã nối route và biên dịch, chưa thử trực tiếp lần này). Không thử mở app trả phí, xóa data, đóng app hoặc giao dịch. Giữ TV ở AppCatalog của macOS Widgets để xem thử. Chỉ lưu local; không commit/push/release GitHub.
+
+## v1.3.3 local — Vista và macOS Widgets
+
+- Dùng chung WidgetHomeView cho XP Widgets/Vista/macOS để giữ thống nhất lịch, bộ lọc bóng đá, nguồn giá và cache hiện có. Biên dịch APK và xác minh chữ ký thành công; JavaScript syntax và bộ kiểm thử thông báo cập nhật Node qua.
+- Đã backup và cài trên Xiaomi MiTV-MOOR2 Android 11: Vista hiển thị đủ sáu widget; chuyển lịch sang tháng sau, bật lịch bóng đá 7 ngày và chọn NHA cho ra danh sách trận/kênh FPT Play từ dữ liệu nguồn. Lưu ý ghi nguồn nằm cuối danh sách và cần cuộn khi có nhiều trận.
+- macOS: ảnh chụp xác nhận thẻ bo góc, thanh menu, Dock và đủ sáu widget. Thử VNINDEX sang VN30, lịch tháng trước, Back mở danh sách ứng dụng/đầu vào, nút Settings mở cài đặt có nền macOS, donate và credit. Các kiểm tra tương tác dùng ADB input trên TV; đã xác nhận D-pad chuyển focus xuống nút mã chứng khoán, lên lịch và OK mở lịch. Chưa đánh giá đầy đủ mọi hướng D-pad hay chất lượng âm thanh nghe thực tế.
+- Xác nhận bridge vẫn giữ sounds=true, weather=true, quick_close=true và thành phố Hồ Chí Minh; không thực hiện giao dịch, không thử đóng app bằng Home 3 lần trong lượt này. Giữ TV ở macOS để xem thử. Thay đổi và gói portable chỉ lưu local, chưa commit/push hoặc tạo GitHub Release.
+
 ## v1.3.2 — Cài đặt theo theme, donate và credit
 
 - Biên dịch và xác minh chữ ký APK; 21 kiểm thử Python và bộ kiểm thử thông báo cập nhật Node đều qua.

@@ -1,0 +1,68 @@
+package io.freemytv;
+
+import android.app.*;
+import android.app.usage.*;
+import android.content.*;
+import android.content.pm.*;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.net.ConnectivityManager;
+import android.os.*;
+import android.view.*;
+import android.widget.*;
+import java.util.*;
+import java.util.concurrent.*;
+
+/** One app/input browser for every classic and widget desktop. Statistics never leave the TV. */
+public final class AppCatalogActivity extends Activity {
+    private final ExecutorService work=Executors.newSingleThreadExecutor();
+    private final Handler main=new Handler();
+    private final java.util.List<Entry> entries=new ArrayList<>();
+    private LinearLayout rows;
+    private TextView status,period;
+    private Button refresh,grant;
+    private Click sound;
+    private float scale;
+    private boolean alive=true,busy,navigation;
+    private int filter;
+    private long generation;
+    private final android.view.ViewTreeObserver.OnGlobalFocusChangeListener focusSound=(old,next)->{if(navigation&&old!=null&&next!=null)sound.move();};
+    private static final class Entry {
+        HomeApps.Item item;Drawable icon;TextView state,ram,network;int uid=-1;boolean shared;
+    }
+    static void open(Activity a,boolean inputs){a.startActivity(new Intent(a,AppCatalogActivity.class).putExtra("inputs",inputs));}
+    private int s(float n){return Math.round(n*scale);}
+    private TextView text(String value,int size,int color,boolean bold){TextView t=new TextView(this);t.setText(value);t.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(size));t.setTextColor(color);t.setTypeface(Typeface.create("sans-serif",bold?Typeface.BOLD:Typeface.NORMAL));return t;}
+    private GradientDrawable bg(int color,int radius){GradientDrawable d=new GradientDrawable();d.setColor(color);d.setCornerRadius(s(radius));return d;}
+    private Button button(String label,Runnable action){Button b=new Button(this);b.setText(label);b.setAllCaps(false);b.setTextSize(android.util.TypedValue.COMPLEX_UNIT_PX,s(16));b.setTextColor(0xffeaf4ff);b.setPadding(s(14),0,s(14),0);b.setSoundEffectsEnabled(false);b.setBackground(bg(0xd52a4568,10));b.setOnFocusChangeListener((v,f)->{b.setBackground(bg(f?0xffd4edff:0xd52a4568,10));b.setTextColor(f?0xff123b65:0xffeaf4ff);});b.setOnClickListener(v->{sound.open();action.run();});return b;}
+    @Override public void onCreate(Bundle state){super.onCreate(state);Ui.init(this);sound=new Click(this);scale=Math.min(getResources().getDisplayMetrics().widthPixels/1280f,getResources().getDisplayMetrics().heightPixels/720f);filter=getIntent().getBooleanExtra("inputs",false)?2:0;
+        FrameLayout root=new FrameLayout(this);root.addView(new View(this){private final ThemeWallpaper wallpaper=new ThemeWallpaper();protected void onDraw(Canvas c){if(!wallpaper.draw(c,PortableControl.theme(AppCatalogActivity.this),getWidth(),getHeight()))c.drawColor(0xff122840);c.drawColor(0xc4071223);}},new FrameLayout.LayoutParams(-1,-1));
+        LinearLayout panel=new LinearLayout(this);panel.setOrientation(LinearLayout.VERTICAL);panel.setPadding(s(36),s(20),s(36),s(16));root.addView(panel,new FrameLayout.LayoutParams(-1,-1));
+        LinearLayout top=new LinearLayout(this);top.setGravity(Gravity.CENTER_VERTICAL);top.addView(text("Ứng dụng & đầu vào",31,Color.WHITE,true),new LinearLayout.LayoutParams(0,s(54),1));refresh=button("↻ Làm mới",this::loadMetrics);top.addView(refresh,new LinearLayout.LayoutParams(s(150),s(43)));Button close=button("Đóng",this::finish);LinearLayout.LayoutParams cp=new LinearLayout.LayoutParams(s(100),s(43));cp.leftMargin=s(12);top.addView(close,cp);panel.addView(top);
+        period=text("Mạng Wi-Fi • Tháng này • Tổng tải xuống + tải lên",16,0xffadcae5,false);panel.addView(period,new LinearLayout.LayoutParams(-1,s(30)));
+        LinearLayout tabs=new LinearLayout(this);String[] names={"Tất cả","Ứng dụng","Đầu vào"};for(int i=0;i<3;i++){final int index=i;Button b=button(names[i],()->{filter=index;showRows();});LinearLayout.LayoutParams p=new LinearLayout.LayoutParams(s(160),s(40));p.rightMargin=s(10);tabs.addView(b,p);}grant=button("Bật thống kê mạng",this::enableNetwork);tabs.addView(grant,new LinearLayout.LayoutParams(s(240),s(40)));panel.addView(tabs);
+        status=text("Đang đọc danh sách…",14,0xffb3c7dc,false);status.setPadding(0,s(8),0,s(8));panel.addView(status,new LinearLayout.LayoutParams(-1,s(43)));
+        LinearLayout columns=new LinearLayout(this);columns.setPadding(s(88),0,s(16),0);columns.addView(text("ỨNG DỤNG / ĐẦU VÀO",13,0xff90acc9,true),new LinearLayout.LayoutParams(0,s(28),1));columns.addView(text("TRẠNG THÁI",13,0xff90acc9,true),new LinearLayout.LayoutParams(s(190),s(28)));columns.addView(text("RAM · PSS",13,0xff90acc9,true),new LinearLayout.LayoutParams(s(130),s(28)));columns.addView(text("MẠNG THÁNG NÀY",13,0xff90acc9,true),new LinearLayout.LayoutParams(s(280),s(28)));panel.addView(columns);
+        ScrollView scroll=new ScrollView(this);scroll.setFillViewport(true);rows=new LinearLayout(this);rows.setOrientation(LinearLayout.VERTICAL);scroll.addView(rows);panel.addView(scroll,new LinearLayout.LayoutParams(-1,0,1));
+        TextView note=text("OK: mở app/đầu vào • Giữ OK: thông tin app • RAM là ảnh chụp tức thời, không phải dung lượng bộ nhớ.\nMạng là lịch sử Wi-Fi do Android lưu (có thể trễ/thiếu), không gồm LAN/di động. UID dùng chung không tách riêng từng app. “Tắt” = không thấy tiến trình.",13,0xff9eb6d0,false);note.setPadding(0,s(10),0,0);panel.addView(note,new LinearLayout.LayoutParams(-1,s(48)));setContentView(root);root.getViewTreeObserver().addOnGlobalFocusChangeListener(focusSound);
+        work.execute(()->{java.util.List<HomeApps.Item> all=new ArrayList<>(HomeApps.shelf(this,false));all.addAll(HomeApps.others(this));all.addAll(HomeApps.allInputs(this));java.util.List<Entry> found=new ArrayList<>();Set<String> seen=new HashSet<>();for(HomeApps.Item item:all){if(item.kind!=HomeApps.APP&&item.kind!=HomeApps.INPUT&&item.kind!=HomeApps.LIVE_TV)continue;String key=item.kind==HomeApps.APP?item.pkg:item.inputId;if(key==null)key=item.key;if(!seen.add(item.kind+":"+key))continue;Entry e=new Entry();e.item=item;if(item.kind==HomeApps.APP)try{ApplicationInfo info=getPackageManager().getApplicationInfo(item.pkg,0);e.uid=info.uid;e.icon=getPackageManager().getApplicationIcon(info);String[] packages=getPackageManager().getPackagesForUid(info.uid);e.shared=packages!=null&&packages.length>1;}catch(Exception ignored){}found.add(e);}main.post(()->{if(!alive)return;entries.addAll(found);showRows();loadMetrics();});});
+    }
+    private void showRows(){rows.removeAllViews();for(Entry e:entries){boolean app=e.item.kind==HomeApps.APP;if(filter==1&&!app||filter==2&&app)continue;LinearLayout row=new LinearLayout(this);row.setGravity(Gravity.CENTER_VERTICAL);row.setPadding(s(12),s(9),s(16),s(9));row.setBackground(bg(0xbe172d46,12));row.setFocusable(true);row.setSoundEffectsEnabled(false);row.setContentDescription(e.item.label);row.setOnFocusChangeListener((v,f)->{row.setBackground(bg(f?0xff315b82:0xbe172d46,12));row.setElevation(f?s(5):0);});
+            ImageView icon=new ImageView(this);icon.setScaleType(ImageView.ScaleType.FIT_CENTER);icon.setBackground(bg(0xffeaf1f7,10));icon.setClipToOutline(true);icon.setPadding(s(5),s(5),s(5),s(5));if(e.icon!=null)icon.setImageDrawable(e.icon);else if(e.item.tile!=null)icon.setImageBitmap(e.item.tile);else icon.setImageResource(android.R.drawable.ic_menu_slideshow);LinearLayout.LayoutParams ip=new LinearLayout.LayoutParams(s(58),s(58));ip.rightMargin=s(18);row.addView(icon,ip);
+            LinearLayout name=new LinearLayout(this);name.setOrientation(LinearLayout.VERTICAL);TextView label=text(e.item.label,20,Color.WHITE,true);label.setMaxLines(1);label.setEllipsize(android.text.TextUtils.TruncateAt.END);name.addView(label);TextView pkg=text(app?e.item.pkg+(e.shared?" · UID dùng chung":""):"Đầu vào TV",12,0xff9ebad5,false);pkg.setMaxLines(1);pkg.setEllipsize(android.text.TextUtils.TruncateAt.END);name.addView(pkg);row.addView(name,new LinearLayout.LayoutParams(0,-2,1));
+            e.state=text(app?"Đang đọc…":e.item.connected?"Đã kết nối":"Chưa kết nối",16,0xffc0d9ee,true);row.addView(e.state,new LinearLayout.LayoutParams(s(190),-2));e.ram=text(app?"Đang đọc…":"Không áp dụng",16,0xffc4d5e7,false);row.addView(e.ram,new LinearLayout.LayoutParams(s(130),-2));e.network=text(app?"Đang đọc…":"Không áp dụng",15,0xffb6d9ed,false);row.addView(e.network,new LinearLayout.LayoutParams(s(280),-2));
+            row.setOnClickListener(v->{sound.open();HomeApps.open(this,e.item,row,0,0,row.getWidth(),row.getHeight());});row.setOnLongClickListener(v->{if(app)try{startActivity(new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,android.net.Uri.parse("package:"+e.item.pkg)));}catch(Exception ignored){}return app;});LinearLayout.LayoutParams rp=new LinearLayout.LayoutParams(-1,s(82));rp.bottomMargin=s(8);rows.addView(row,rp);
+        }if(rows.getChildCount()==0)rows.addView(text("Không có đầu vào/ứng dụng trong nhóm này.",20,Color.WHITE,false));if(!busy&&!entries.isEmpty())loadMetrics();}
+    private boolean usageAllowed(){AppOpsManager ops=(AppOpsManager)getSystemService(APP_OPS_SERVICE);return ops.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,android.os.Process.myUid(),getPackageName())==AppOpsManager.MODE_ALLOWED;}
+    private void enableNetwork(){if(busy)return;status.setText("Cho phép BBI đọc thống kê mạng từng app trên TV…");busy=true;work.execute(()->{boolean ok=false;try(Adb adb=Adb.connect(this,5000,null)){adb.shell("appops set io.freemytv GET_USAGE_STATS allow");ok=usageAllowed();}catch(Exception ignored){}final boolean enabled=ok;main.post(()->{if(!alive)return;busy=false;if(enabled)loadMetrics();else{status.setText("Chọn BBI Legend TV và cho phép quyền truy cập sử dụng.");try{startActivity(new Intent(android.provider.Settings.ACTION_USAGE_ACCESS_SETTINGS));}catch(Exception e){status.setText("TV chưa cho phép đọc lịch sử mạng. Bật gỡ lỗi và thử lại.");}}});});}
+    private void loadMetrics(){if(busy||entries.isEmpty()||!alive)return;busy=true;refresh.setEnabled(false);status.setText("Đang đo RAM và đọc lịch sử mạng…");final long request=++generation;final java.util.List<Entry> snapshot=new ArrayList<>(entries);work.execute(()->{
+        Map<String,List<Integer>> processes=null;Map<String,Long> memory=new HashMap<>();
+        try(Adb adb=Adb.connect(this,4000,null)){String raw=adb.shell("ps -A -o PID,NAME");if(raw.contains("PID")&&raw.contains("NAME")){processes=AppMetrics.processes(raw);for(Entry e:snapshot)if(e.item.kind==HomeApps.APP&&processes.containsKey(e.item.pkg)){long sum=0;boolean measured=true;for(int pid:processes.get(e.item.pkg)){Long pss=AppMetrics.pss(adb.shell("dumpsys meminfo --local "+pid));if(pss==null){measured=false;break;}sum+=pss;}if(measured)memory.put(e.item.pkg,sum);}}}catch(Exception ignored){}
+        Map<Integer,long[]> traffic=new HashMap<>();boolean network=false;Calendar from=Calendar.getInstance(XpWidgetsData.VN);from.set(Calendar.DAY_OF_MONTH,1);from.set(Calendar.HOUR_OF_DAY,0);from.set(Calendar.MINUTE,0);from.set(Calendar.SECOND,0);from.set(Calendar.MILLISECOND,0);long start=from.getTimeInMillis(),end=System.currentTimeMillis();
+        if(usageAllowed())try{NetworkStatsManager manager=(NetworkStatsManager)getSystemService(NETWORK_STATS_SERVICE);try(NetworkStats stats=manager.querySummary(ConnectivityManager.TYPE_WIFI,null,start,end)){NetworkStats.Bucket bucket=new NetworkStats.Bucket();while(stats.hasNextBucket()){stats.getNextBucket(bucket);long[] bytes=traffic.get(bucket.getUid());if(bytes==null){bytes=new long[2];traffic.put(bucket.getUid(),bytes);}bytes[0]+=bucket.getRxBytes();bytes[1]+=bucket.getTxBytes();}network=true;}}catch(Exception ignored){}
+        final Map<String,List<Integer>> proc=processes;final boolean netOk=network;main.post(()->{if(!alive||request!=generation)return;busy=false;refresh.setEnabled(true);grant.setVisibility(usageAllowed()?View.GONE:View.VISIBLE);period.setText("Mạng Wi-Fi • "+XpWidgetsData.date(start,"dd/MM/yyyy")+" → "+XpWidgetsData.date(end,"HH:mm dd/MM/yyyy")+" • Theo UID");int running=0;for(Entry e:snapshot){if(e.item.kind!=HomeApps.APP)continue;boolean live=proc!=null&&proc.containsKey(e.item.pkg);if(live)running++;if(e.state==null)continue;e.state.setText(proc==null?"Chưa đọc được":live?"Đang hoạt động":"Tắt");e.state.setTextColor(proc==null?0xffd4c69b:live?0xff77dfa8:0xffa9bbcc);Long ram=memory.get(e.item.pkg);e.ram.setText(ram!=null?AppMetrics.bytes(ram):proc!=null&&!live?"0 B":"Chưa đọc được");long[] bytes=traffic.get(e.uid);if(netOk&&e.uid>=0){long rx=bytes==null?0:bytes[0],tx=bytes==null?0:bytes[1];e.network.setText(AppMetrics.bytes(rx+tx)+(bytes==null?" · chưa có bản ghi":"")+"\n↓ "+AppMetrics.bytes(rx)+"  ↑ "+AppMetrics.bytes(tx)+(e.shared?"\nUID dùng chung":""));}else e.network.setText(usageAllowed()?"TV chưa trả số liệu":"Cần bật thống kê mạng");}status.setText(snapshot.size()+" mục • "+(proc==null?"RAM/trạng thái cần gỡ lỗi TV":running+" app có tiến trình • RAM PSS lúc "+XpWidgetsData.date(end,"HH:mm:ss"))+(!netOk?" • Chưa có số liệu mạng":" • Lịch sử Android, không phải tốc độ trực tiếp"));});
+    });}
+    @Override protected void onResume(){super.onResume();if(!busy&&!entries.isEmpty())loadMetrics();}
+    @Override public boolean dispatchKeyEvent(KeyEvent e){navigation=e.getKeyCode()>=19&&e.getKeyCode()<=22&&e.getAction()==KeyEvent.ACTION_DOWN;return super.dispatchKeyEvent(e);}
+    @Override protected void onDestroy(){alive=false;generation++;main.removeCallbacksAndMessages(null);work.shutdownNow();sound.release();super.onDestroy();}
+}

@@ -1,6 +1,6 @@
 # BBI Legend TV
 
-Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **Free My TV, Windows XP, XP Widgets, Vista và macOS**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
+Bộ công cụ cá nhân hóa **Android TV / Google TV** của BBI MEDIA phát triển thêm từ repo cơ bản Free My TV: kiểm tra thiết bị, cài giao diện **XP, Vista, macOS bản cổ điển và bản widget, kèm Free My TV mặc định**, sao lưu / khôi phục, quản lý ứng dụng và thiết lập các tiện ích cho remote.
 
 Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765`. Có file khởi chạy cho **Windows, Linux và macOS**; Windows đã được kiểm tra thực tế.
 
@@ -8,7 +8,7 @@ Giao diện tiếng Việt, chạy trên máy tính tại `http://127.0.0.1:8765
 
 - **Hướng dẫn bằng hình:** từng bước bật chế độ nhà phát triển, gỡ lỗi USB, lấy địa chỉ IP và cho phép máy tính kết nối với TV.
 - **Kết nối & kiểm tra:** đọc model, phiên bản Android, kiểm tra khả năng hỗ trợ; kết nối ADB trong mạng nội bộ và ghép nối bằng mã 6 số.
-- **Kho giao diện:** Free My TV mặc định, Windows XP, XP Widgets, Vista và macOS trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
+- **Kho giao diện:** Ba theme cổ điển XP/Vista/macOS và ba theme Widgets tương ứng, kèm Free My TV mặc định trong cùng một APK đã ký; đổi phong cách ngay từ công cụ.
 - **Sao lưu & khôi phục:** tự tạo backup trước khi thay đổi, có sao lưu thủ công; kiểm tra SHA-256 và chỉ khôi phục về đúng TV đã tạo bản sao.
 - **Home 3 lần:** nhấn Home liên tục 3 lần để đóng hẳn ứng dụng vừa dùng; bảo vệ launcher, bàn phím và dịch vụ hệ thống.
 - **Cài đặt nhanh:** âm thanh điều hướng, thành phố và đơn vị nhiệt độ, thời tiết / crypto trên theme mặc định, ngày giờ tự động; mở cài đặt mạng và Trợ năng trên TV.
@@ -102,13 +102,13 @@ Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòn
 - **Kết nối:** API chỉ chấp nhận IP LAN thuộc các dải `10.x`, `172.16–31.x`, `192.168.x`. ADB ghép nối cổng động cần chuyển sang cổng 5555 để cơ chế tự kết nối của Free My TV hoạt động.
 - **Dữ liệu:** máy chủ chỉ lắng nghe `127.0.0.1`, kiểm tra token phiên và Host/Origin. Mã ghép nối chỉ giữ tạm trong bộ nhớ. Không đưa khóa ADB, khóa ký APK hoặc backup cá nhân lên repo.
 
-## XP Widgets — màn hình thông tin phong cách XP
+## Widgets — XP, Vista Aero và macOS
 
-Theme **XP Widgets** được thêm riêng, giữ theme XP cổ điển. Trong **Kho giao diện**, chọn **XP Widgets** rồi **Cài giao diện đã chọn** để cập nhật APK có theme mới. Nếu TV đã có APK 1.3-widgets, có thể dùng **Chỉ đổi theme**. Sau khi cài, widget chạy trực tiếp trên TV; không cần giữ máy tính mở.
+**XP Widgets, Vista Widgets và macOS Widgets** dùng chung bộ widget và dữ liệu; Vista có khung Aero, macOS có thẻ bo góc, thanh menu và Dock kính. Theme XP cổ điển được giữ riêng. Trong **Kho giao diện**, chọn một theme **Widgets** rồi **Cài giao diện đã chọn** để cập nhật APK có theme mới. Vista/macOS Widgets có mã riêng từ APK **1.3.4** trở lên; XP Widgets cần 1.3-widgets trở lên. Sau khi nâng cấp, có thể dùng **Chỉ đổi theme**. Sau khi cài, widget chạy trực tiếp trên TV; không cần giữ máy tính mở.
 
 - **Bố cục:** cột ứng dụng bên trái, sáu cửa sổ XP cho đồng hồ, thời tiết, lịch, bóng đá, vàng và chứng khoán; thanh Start ở dưới. Dùng remote để chọn, nhấn OK xem chi tiết; Back/Menu mở danh sách app.
 - **Thời gian & lịch:** giờ Việt Nam UTC+7, lịch dương theo tháng và lịch âm Việt Nam tính trên TV (1900–2099, có tháng nhuận). Nhấn OK vào lịch để xem từng ngày âm/dương, chuyển tháng.
-- **Thời tiết:** Open-Meteo, theo thành phố và đơn vị nhiệt độ đã chọn; làm mới khoảng 30 phút. Công tắc thời tiết cũng áp dụng cho XP Widgets.
+- **Thời tiết:** Open-Meteo, theo thành phố và đơn vị nhiệt độ đã chọn; làm mới khoảng 30 phút. Công tắc thời tiết áp dụng cho cả ba theme widgets.
 - **Bóng đá:** Hôm nay / 7 ngày tới, crawl từ [lịch Bongda24h](https://bongda24h.vn/bong-da/lich-thi-dau.html) và các phần lịch theo ngày mà chính trang này tải. Ưu tiên đội tuyển Việt Nam nam/nữ, V.League 1; tiếp theo Ngoại hạng Anh, Champions League (C1), Serie A, La Liga và Bundesliga. Có bộ lọc từng giải và liên kết lịch gốc/VPF/VFF. Làm mới khoảng 30 phút, có nút làm mới thủ công; lần tải thiếu ngày thử lại khoảng 5 phút. Không thực thi script hoặc tải hình ảnh/quảng cáo của trang.
 - **Kênh phát tại Việt Nam:** lấy nguyên tên kênh từ từng trận trên Bongda24h cùng giờ thi đấu theo Việt Nam; không cộng thêm 7 giờ và không suy đoán theo đơn vị giữ bản quyền. Thiếu kênh ghi **Chưa có thông tin kênh tại Việt Nam**. Không cung cấp luồng phát. Độ đầy đủ phụ thuộc trang nguồn; lịch đội tuyển chỉ hiện khi có trận trong dữ liệu. Nếu trang đổi cấu trúc/lỗi mạng, giữ bản lưu và báo trạng thái thay vì coi là lịch trống.
 - **Giá vàng:** vàng miếng SJC do DOJI công bố, qua feed mở taichinh.com; hiển thị mua/bán theo triệu đồng/lượng và mốc công bố riêng. Biểu đồ giá bán tích lũy các mốc thực nhận trên TV (tối đa 30 ngày/240 điểm), cần ít nhất hai mốc để vẽ; không phải lịch sử thị trường đầy đủ. Làm mới khoảng 15 phút.
@@ -170,3 +170,24 @@ Cảm ơn bạn rất nhiều!
 [MIT](LICENSE) © BBI MEDIA.
 
 Mã nguồn Free My TV giữ giấy phép [MIT của dự án gốc](LICENSE-FreeMyTV.txt). Các công cụ, phông chữ và biểu tượng đi kèm có giấy phép riêng trong thư mục tương ứng.
+
+## Ứng dụng & đầu vào trên TV
+
+Màn hình dùng chung cho cả sáu giao diện và Free My TV mặc định. Có icon, tên/package, nhóm ứng dụng/đầu vào, trạng thái và RAM PSS. OK mở app/đầu vào; giữ OK mở thông tin app; Back đóng danh sách. **Tắt** nghĩa là không thấy tiến trình mang tên package lúc làm mới, không phải app bị vô hiệu hóa. RAM là tổng PSS của các tiến trình tên package/package:worker tại thời điểm đo qua ADB nội bộ; có thể đổi ngay sau đó. Không đọc được sẽ ghi rõ thay vì giả số 0.
+
+**Mạng** là lưu lượng Wi-Fi Android đã lưu trong tháng hiện tại (UTC+7), có tổng và tải xuống/tải lên theo UID; không phải dung lượng file/data/cache hay tốc độ mạng tức thời. Không gồm Ethernet/LAN hoặc di động trong bản này. Android có thể cập nhật trễ, thiếu lịch sử hoặc mất số liệu khi reset TV; không có bản ghi được ghi rõ. App dùng chung UID có số liệu gộp và nhãn riêng, không cộng chúng như các app độc lập.
+
+Nút **Bật thống kê mạng** cho phép BBI Legend TV đọc thống kê sử dụng trên chính TV qua ADB nội bộ đã được cho phép; nếu không thực hiện được sẽ mở trang quyền Android. Thống kê chỉ xử lý trên TV, không gửi đi. Có thể thu hồi quyền truy cập sử dụng trong cài đặt Android; chức năng mở app/đầu vào vẫn dùng được.
+
+Nguồn API: [Android NetworkStatsManager](https://developer.android.com/reference/android/app/usage/NetworkStatsManager). API thống kê app khác yêu cầu quyền PACKAGE_USAGE_STATS do người dùng cho phép.
+
+## Thanh truy cập nhanh trên màn hình chính
+
+Tất cả giao diện có thanh trên gồm **Mạng**, **Đổi nguồn**, **Video**, **Ứng dụng** và **Cài đặt**. Màn hình chính chỉ giữ app, widget và các nút thao tác; tên dự án/theme và giới thiệu nằm trong Settings.
+
+- **Mạng:** tên Wi-Fi đang dùng (hoặc Ethernet/LAN), tốc độ tải xuống/tải lên toàn TV cập nhật khoảng mỗi giây. Dùng chênh lệch bộ đếm [Android TrafficStats](https://developer.android.com/reference/android/net/TrafficStats) theo thời gian thực đã trôi qua, không phải đo tốc độ tối đa của đường truyền; số liệu có thể gồm lưu lượng của dịch vụ nền. Bộ đếm không hỗ trợ/đang đổi mạng sẽ hiện dấu chờ. Khi TV không cho ứng dụng đọc SSID, thử đọc qua ADB nội bộ đã được cho phép, nếu vẫn không được thì ghi Wi-Fi. Không lưu tên mạng trong repo hoặc gửi ra máy chủ.
+- **Đổi nguồn:** TV/cáp/ăng-ten qua app Live TV, HDMI và các đầu vào passthrough như AV/component nếu firmware công bố. Không tạo mục cho cổng TV không hỗ trợ. Cáp/ăng-ten phụ thuộc app TV, bộ dò và thiết lập sẵn trên máy.
+- **Video:** mở cài đặt hình ảnh của hãng qua DISPLAY_SETTINGS (đã xác nhận PictureActivity trên Xiaomi thử nghiệm); firmware khác có thể mở trang Display hoặc cài đặt hệ thống dự phòng. Không tự chỉnh độ sáng, độ tương phản hay chế độ ảnh.
+- **Ứng dụng/Cài đặt:** vào trình quản lý app/đầu vào chung và Settings BBI Legend TV. Việc theo dõi mạng chỉ chạy khi màn hình chính đang hoạt động.
+
+Ảnh trong kho theme là SVG minh họa bố cục, không phải số liệu mạng thực tế hoặc ảnh chụp riêng của người dùng.

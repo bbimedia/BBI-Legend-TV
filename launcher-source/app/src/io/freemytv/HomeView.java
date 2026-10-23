@@ -1739,15 +1739,7 @@ final class HomeView extends ViewGroup implements Choreographer.FrameCallback, H
         gridDirty = true;
     }
 
-    private void openSheet() {
-        sheetOpen = true;
-        gridIndex = 0;
-        scroll.snap(0);
-        retargetGrid(true);
-        retarget(false);
-        sheet.target = 1;
-        gridDirty = true;
-    }
+    private void openSheet() { AppCatalogActivity.open(activity,false); }
 
     private void closeSheet() {
         sheetOpen = false;

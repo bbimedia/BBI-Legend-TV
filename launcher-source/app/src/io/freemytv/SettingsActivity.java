@@ -367,15 +367,17 @@ public class SettingsActivity extends Activity {
             // A dim layer keeps settings legible while preserving the active desktop wallpaper.
             c.drawColor(0x59071422);
 
-            // On the left: big symbol, title, description.
+            // Center the complete branding and donation stack above the footer.
+            c.save();c.translate(0,-150*k);
             float cx = 500 * k;
             if(brandMark!=null){float bh=170*k,bw=bh*brandMark.getWidth()/brandMark.getHeight();tmp.set(cx-bw/2,400*k-bh/2,cx+bw/2,400*k+bh/2);c.drawBitmap(brandMark,null,tmp,brandPaint);}else Symbols.draw(getContext(),c,"sparkles",cx,400*k,150*k,0xEBFFFFFF);
             c.drawText("BBI Legend TV", cx, 612 * k, title);
             c.drawText("BBI MEDIA · Cá nhân hóa màn hình lớn", cx, 660 * k, subtitle);
             c.drawText(versionName(getContext()), cx, 704 * k, version);
 
+            c.restore();
             if (screen == MAIN) drawMain(c, seconds); else if (screen == HOME_CHOICE) drawChoice(c); else if (screen == PICKER) drawPicker(c); else if (screen == SHELF_EDIT) drawShelfEditor(c); else drawList(c);
-            drawDonation(c);
+            c.save();c.translate(0,-150*k);drawDonation(c);c.restore();
             Paint footerShade=new Paint();footerShade.setColor(0xc90b172b);c.drawRect(0,h-88*k,w,h,footerShade);
             Paint credit=Ui.text(Ui.regular,20*k,0xffedf4ff);credit.setTextAlign(Paint.Align.CENTER);
             c.drawText("Mã nguồn gốc: @free-my-tv - MIT - Phát triển: BBIMedia.VN",w/2f,h-58*k,credit);
@@ -451,7 +453,6 @@ public class SettingsActivity extends Activity {
             }
             // Keep diagnostics below all seven controls and above the source footer.
             float limit=h-110*k;
-            if(y+170*k<limit)y=drawComparison(c,y);
             if(y+160*k<limit)y=drawRecs(c,y+26*k);
             if(y+150*k<limit)drawNotices(c,y+40*k);
         }
@@ -496,27 +497,6 @@ public class SettingsActivity extends Activity {
                 rowRect.set(tmp);
             }
             return f;
-        }
-
-        private float drawComparison(Canvas c, float y) {
-            float x = LIST_X * k + 30 * k, colA = LIST_R * k - 220 * k, colB = LIST_R * k - 30 * k;
-            c.drawText(Ui.tr("COMPARAÇÃO", "COMPARISON"), x, y, header);
-            cellValue.setColor(0x73FFFFFF);
-            c.drawText(Ui.tr("Original", "Original"), colA, y, cellValue);
-            c.drawText("BBI Legend TV", colB, y, cellValue);
-            cellValue.setColor(0xD9FFFFFF);
-            JSONObject metrics = state.optJSONObject("metrics");
-            JSONObject a = metrics == null ? null : metrics.optJSONObject(HomeMode.ORIGINAL);
-            JSONObject b = metrics == null ? null : metrics.optJSONObject(HomeMode.FREE);
-            String[][] rows = {{Ui.tr("Botão Início", "Home button"), "homeMs"}, {Ui.tr("Memória livre", "Free memory"), "memAvailableMB"},
-                    {Ui.tr("Memória do Início", "Home screen memory"), "homePssMB"}};
-            for (int i = 0; i < rows.length; i++) {
-                float base = y + (46 + 40 * i) * k;
-                c.drawText(rows[i][0], x, base, cellLabel);
-                c.drawText(metric(a, rows[i][1]), colA, base, cellValue);
-                c.drawText(metric(b, rows[i][1]), colB, base, cellValue);
-            }
-            return y + (46 + 40 * rows.length) * k;
         }
 
         private void drawNotices(Canvas c, float y) {

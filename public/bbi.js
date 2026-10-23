@@ -1,16 +1,19 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.3.2';
+  const VERSION = '1.3.5';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
-    ['◈','Năm diện mạo','Free My TV mặc định, XP, XP Widgets, Vista và macOS trong cùng một bản cài.'],
+    ['◈','Sáu phong cách + mặc định','XP, Vista, macOS bản cổ điển và bản widget, kèm Free My TV mặc định.'],
     ['↶','Sao lưu & khôi phục','Tự backup trước thay đổi, kiểm tra toàn vẹn và khôi phục đúng TV.'],
     ['⌂','Home 3 lần','Đóng hẳn ứng dụng vừa dùng; giữ dữ liệu và bảo vệ dịch vụ hệ thống.'],
     ['♫','Cá nhân hóa nhanh','Âm thanh điều hướng, thời tiết, thành phố và các thao tác nhanh trên TV.'],
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.3.5',date:'23/10/2026',title:'Màn hình chính gọn và thanh truy cập nhanh',highlights:[{title:'Chỉ app và widget',desc:'Bỏ tên BBI, tên theme, cửa sổ giới thiệu và chữ trang trí khỏi màn hình chính. Thông tin dự án giữ trong Settings.'},{title:'Mạng và tốc độ thực tế',desc:'Thanh trên có tên mạng đang dùng và lưu lượng toàn TV cập nhật mỗi giây; bấm để vào cài đặt mạng.'},{title:'Nguồn và hình ảnh',desc:'Truy cập nhanh TV/cáp/HDMI/AV theo đầu vào TV hỗ trợ, chỉnh Video/hình ảnh, ứng dụng và cài đặt.'}]},
+    {version:'v1.3.4',date:'23/10/2026',title:'Ứng dụng & đầu vào thống nhất trên sáu giao diện',highlights:[{title:'Icon, trạng thái và RAM',desc:'Danh sách app/đầu vào dùng chung, icon và tên rõ ràng; đo RAM PSS theo tiến trình tại thời điểm làm mới.'},{title:'Lưu lượng mạng theo app',desc:'Lịch sử Wi-Fi tháng này: tổng, tải xuống và tải lên theo UID; bật quyền đọc thống kê ngay trên TV. Không phải dung lượng lưu trữ.'},{title:'Ba bản cổ điển + ba bản widget',desc:'XP, Vista và macOS đều có lựa chọn cổ điển/widget riêng; giữ Free My TV mặc định và cấu hình hiện có.'}]},
+    {version:'v1.3.3',date:'23/10/2026',title:'Vista và macOS có bộ widget đầy đủ',highlights:[{title:'Widgets đồng bộ',desc:'Thời gian, thời tiết, lịch âm/dương, lịch bóng đá kèm kênh, giá vàng và chứng khoán dùng chung dữ liệu với XP Widgets.'},{title:'Phong cách riêng',desc:'Vista Aero và macOS với thẻ bo góc, menu và Dock kính. Giữ âm thanh điều hướng, Home 3 lần và cấu hình hiện có.'},{title:'Settings cân đối',desc:'Căn giữa khối thông tin và donate bên trái; bỏ bảng Comparison.'}]},
     {version:'v1.3.2',date:'23/10/2026',title:'Nền cài đặt đồng bộ theo theme',highlights:[{title:'Giao diện cài đặt',desc:'Dùng chung nền với màn hình chính; bổ sung VietQR ủng hộ BBI MEDIA ở cột trái.'},{title:'Credit và miễn trừ',desc:'Hiển thị nguồn gốc, đơn vị phát triển và lưu ý tương thích, hình ảnh, nhãn hiệu ở cuối màn hình.'}]},
     {version:'v1.3.1',date:'23/10/2026',title:'Lịch Bongda24h & nhận diện BBI Legend TV trên launcher',highlights:[
       {title:'Lịch bóng đá và kênh phát từ Bongda24h',desc:'Đọc lịch 7 ngày của trang nguồn, giữ giờ Việt Nam và tên kênh từng trận, ưu tiên Việt Nam. Làm mới thủ công và giữ bản lưu khi mất mạng hoặc cấu trúc trang đổi.'},
