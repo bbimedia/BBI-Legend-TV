@@ -25,3 +25,13 @@ Run: `python -m unittest discover -s tests -v`.
 - Đã kiểm tra trực tiếp HTTPS: giá vàng công bố có metadata nguồn/mốc giờ; DNSE trả chuỗi VNINDEX và FPT; TheSportsDB trả mã V.League 4803, C1 4480, ĐT nam 140161/nữ 144951 và lịch kênh quốc gia Vietnam. Việc có dữ liệu trong một lần kiểm tra không bảo đảm độ phủ hoặc độ ổn định về sau.
 - Ảnh SVG XP Widgets là minh họa bố cục, không phải ảnh chụp từ TV. Chưa cài bản này lên TV trong lượt phát triển; cần kiểm tra thực tế remote, overscan và dữ liệu nguồn trên thiết bị đích. Linux/macOS chưa chạy thực tế.
 - Theme mới không gỡ hoặc ghi đè cấu hình XP cổ điển; việc cài qua công cụ vẫn dùng cơ chế backup trước thay đổi. Widget cache không thuộc export/restore tùy chọn.
+
+## v1.3.1 — Bongda24h & cài đặt BBI Legend TV
+
+- Cài thử thực tế trên Xiaomi MiTV-MOOR2 / Android 11 tại IP LAN do chủ thiết bị cung cấp. Backup trước khi nâng cấp; giữ theme, thành phố, âm thanh, Home 3 lần và shelf ứng dụng.
+- Xác nhận hình thật: đồng hồ, lịch âm/dương, thời tiết Hồ Chí Minh, giá DOJI/SJC và biểu đồ VNINDEX tải dữ liệu. D-pad phải/OK mở lịch; chuyển tháng hoạt động. Đã đối chiếu lịch V.League và tên kênh với nguồn Bongda24h.
+- `BongDa24hParserTest.java`: giờ Việt Nam không cộng hai lần, chọn giải và nữ Việt Nam, kênh có/không có, HTML entities, lọc ngày, chuyển năm, báo lỗi khi cấu trúc không còn nhận diện. Kiểm tra trên HTML tải thực tế ngoài repo.
+- Đổi hộp chi tiết XP sang theme sáng để tương phản chữ/nền đúng trên TV. Tên/logo BBI và dòng nguồn cuối màn hình đã kiểm tra qua ảnh chụp thiết bị.
+- Không gỡ launcher gốc hoặc xóa dữ liệu app. Không dùng thao tác chuyển Home Screen sang Original khi thử.
+
+- Kiểm tra thêm trên TV: NHA 7 ngày hiển thị Ipswich–Nottingham, Aston Villa–Man City, Arsenal–Everton… cùng tên kênh FPT Play từ nguồn. Bộ lọc C1 hiển thị trạng thái chưa có trận trong phần lịch tuần nhận được; không tự tạo trận. Sửa vùng chẩn đoán trong cài đặt để không đè lên dòng Home 3 lần và footer nguồn.

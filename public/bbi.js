@@ -1,7 +1,7 @@
 'use strict';
 // BBI MEDIA contact and donation details; release history belongs to BBI Legend TV.
 (() => {
-  const VERSION = '1.3.0';
+  const VERSION = '1.3.1';
   const FEATURES = [
     ['⌁','Kết nối & kiểm tra TV','Đọc thông tin, kiểm tra Android TV / Google TV và hướng dẫn chuẩn bị bằng hình.'],
     ['◈','Năm diện mạo','Free My TV mặc định, XP, XP Widgets, Vista và macOS trong cùng một bản cài.'],
@@ -11,6 +11,11 @@
     ['▦','Quản lý ứng dụng','Xem app đang mở/chạy nền, RAM ước lượng và chụp màn hình TV.']
   ];
   const RELEASES = [
+    {version:'v1.3.1',date:'23/10/2026',title:'Lịch Bongda24h & nhận diện BBI Legend TV trên launcher',highlights:[
+      {title:'Lịch bóng đá và kênh phát từ Bongda24h',desc:'Đọc lịch 7 ngày của trang nguồn, giữ giờ Việt Nam và tên kênh từng trận, ưu tiên Việt Nam. Làm mới thủ công và giữ bản lưu khi mất mạng hoặc cấu trúc trang đổi.'},
+      {title:'Cài đặt launcher mang tên BBI Legend TV',desc:'Cập nhật tên app, logo BBI MEDIA, màn hình cài đặt và nhãn dịch vụ. Giữ một dòng ghi nguồn Free My TV / MIT ở cuối trang cài đặt.'},
+      {title:'Kiểm tra thực tế trên Xiaomi Android 11',desc:'Đã cài thử, kiểm tra widget thật, phím remote, lịch tháng và bộ lọc bóng đá. Sao lưu trước mỗi lần cài, giữ cấu hình hiện có.'}
+    ]},
     {version:'v1.3.0',date:'23/10/2026',title:'XP Widgets · Một màn hình, nhiều thông tin',highlights:[
       {title:'Theme XP Widgets riêng',desc:'Giữ theme XP cổ điển; thêm bố cục TV với đồng hồ, lịch âm/dương UTC+7, lịch tháng và thời tiết theo thành phố.'},
       {title:'Bóng đá và kênh tại Việt Nam',desc:'Hôm nay/7 ngày: ưu tiên ĐT Việt Nam nam/nữ, V.League; NHA, C1, Serie A, La Liga và Bundesliga. Chỉ ghép kênh theo trận/quốc gia, ghi rõ khi chưa có; nguồn miễn phí giới hạn phạm vi.'},

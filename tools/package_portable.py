@@ -5,7 +5,7 @@ import json
 import zipfile
 
 root = Path(__file__).resolve().parents[1]
-output = root.parent / 'BBI-Legend-TV-v1.3.0.zip'
+output = root.parent / 'BBI-Legend-TV-v1.3.1.zip'
 allowed = {'public', 'packages', 'launcher-source', 'tests', 'tools'}
 root_files = {'server.py', 'start-windows.cmd', 'start.sh', 'start-macos.command',
               'README.md', 'DISCLAIMER.md', 'LICENSE', 'LICENSE-FreeMyTV.txt', 'TESTING.md'}

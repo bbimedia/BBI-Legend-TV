@@ -62,8 +62,8 @@ final class Spanish {
             case "Switching the home screen and screensaver…": return "Cambiando la pantalla de inicio y el protector de pantalla…";
             case "Android didn't accept the new home screen": return "Android no aceptó la nueva pantalla de inicio";
             case "Turning off apps (": return "Desactivando apps (";
-            case "Measuring Free My TV…": return "Midiendo Free My TV…";
-            case "Couldn't turn on Free My TV: ": return "No se pudo activar Free My TV: ";
+            case "Measuring BBI Legend TV…": return "Midiendo BBI Legend TV…";
+            case "Couldn't turn on BBI Legend TV: ": return "No se pudo activar BBI Legend TV: ";
             case "Turning the apps back on…": return "Reactivando las apps…";
             case "Turning apps back on (": return "Reactivando apps (";
             case "Restoring the original home screen…": return "Restaurando la pantalla de inicio original…";
@@ -71,16 +71,16 @@ final class Spanish {
             case "the original home screen": return "la pantalla de inicio original";
             case "Original mode, but I couldn't turn back on: ": return "Modo original, pero no se pudo reactivar: ";
             case "Couldn't go back to the original: ": return "No se pudo volver al modo original: ";
-            case "Free My TV's home screen crashed 3 times in a row; I switched back to the original one.": return "La pantalla de inicio de Free My TV falló 3 veces seguidas; volví a la original.";
+            case "BBI Legend TV's home screen crashed 3 times in a row; I switched back to the original one.": return "La pantalla de inicio de BBI Legend TV falló 3 veces seguidas; volví a la original.";
             case "the home screen": return "la pantalla de inicio";
             case "the screensaver": return "el protector de pantalla";
-            case "Couldn't check Free My TV: ": return "No se pudo comprobar Free My TV: ";
+            case "Couldn't check BBI Legend TV: ": return "No se pudo comprobar BBI Legend TV: ";
             case "The TV update turned back on ": return "La actualización del TV reactivó ";
             case "Turned off what was missing: ": return "Desactivé lo que faltaba: ";
-            case "The TV was updated; Free My TV is still on.": return "El TV se actualizó; Free My TV sigue activo.";
+            case "The TV was updated; BBI Legend TV is still on.": return "El TV se actualizó; BBI Legend TV sigue activo.";
             case "Connecting…": return "Conectando…";
             case "Accept “Allow USB debugging?” on the TV (tick “Always allow”).": return "Acepta “¿Permitir depuración USB?” en el TV (marca “Permitir siempre”).";
-            case "Free My TV's home screen ran into a problem.\nGoing back to the TV's original home screen…": return "La pantalla de inicio de Free My TV tuvo un problema.\nVolviendo a la pantalla original del TV…";
+            case "BBI Legend TV's home screen ran into a problem.\nGoing back to the TV's original home screen…": return "La pantalla de inicio de BBI Legend TV tuvo un problema.\nVolviendo a la pantalla original del TV…";
             // Home Settings, Shelf and Remote Buttons (#15, #16, #17)
             case "Language": return "Idioma";
             case "Temperature": return "Temperatura";
@@ -131,9 +131,9 @@ final class Spanish {
             case "The other buttons: the TV itself controls them.": return "Los demás botones: el propio TV los controla.";
             case "TCL remote buttons: on this TV they work as always.": return "Botones del control de TCL: en este TV funcionan como siempre.";
             default:
-                if (english.startsWith("Free My TV is on: new home screen and screensaver, ")) {
-                    return "Free My TV está activo: nueva pantalla de inicio y protector, "
-                            + english.substring("Free My TV is on: new home screen and screensaver, ".length()).replace(" apps turned off.", " apps desactivadas.");
+                if (english.startsWith("BBI Legend TV is on: new home screen and screensaver, ")) {
+                    return "BBI Legend TV está activo: nueva pantalla de inicio y protector, "
+                            + english.substring("BBI Legend TV is on: new home screen and screensaver, ".length()).replace(" apps turned off.", " apps desactivadas.");
                 }
                 if (english.startsWith("On · ")) {
                     return "Activas · " + english.substring(5).replace(" titles from the TV's apps, 3 new ones every hour.",

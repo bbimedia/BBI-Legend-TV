@@ -94,8 +94,8 @@ Nếu phát hiện tài sản có vấn đề về quyền sử dụng, vui lòn
 ## Lưu ý
 
 - **Thiết bị hỗ trợ:** Hỗ trợ hầu hết các dòng Android TV (Google TV) hiện nay. Đã thử với Xiaomi MiTV-MOOR2 / Android 11. Khả năng tương thích còn phụ thuộc firmware và remote. TV chạy webOS hoặc Tizen không thuộc phạm vi công cụ này. Linux/macOS có file khởi chạy nhưng chưa chạy thực tế trên từng hệ điều hành; Linux ARM cần ADB phù hợp kiến trúc qua PATH hoặc `--adb`.
-- **Lần đầu cài:** trên TV, chọn **Free My TV → Home Screen → Free My TV** và chấp nhận yêu cầu gỡ lỗi. Để về giao diện gốc, chọn **Home Screen → Original** trước khi gỡ Free My TV.
-- **Home 3 lần:** cần ADB cổng 5555 và dịch vụ Trợ năng **Free My TV — Đóng ứng dụng**. Khi bật tùy chọn và lưu/cài, công cụ bật dịch vụ này, giữ các dịch vụ Trợ năng khác. Buộc dừng sẽ ngắt phát nội dung và tác vụ nền của app cho đến khi mở lại.
+- **Lần đầu cài:** trên TV, chọn **Free My TV → Home Screen → BBI Legend TV** và chấp nhận yêu cầu gỡ lỗi. Để về giao diện gốc, chọn **Home Screen → Original** trước khi gỡ Free My TV.
+- **Home 3 lần:** cần ADB cổng 5555 và dịch vụ Trợ năng **BBI Legend TV — Đóng ứng dụng**. Khi bật tùy chọn và lưu/cài, công cụ bật dịch vụ này, giữ các dịch vụ Trợ năng khác. Buộc dừng sẽ ngắt phát nội dung và tác vụ nền của app cho đến khi mở lại.
 - **Backup:** lưu APK và các tùy chọn mà BBI Legend TV quản lý khi launcher hỗ trợ xuất cài đặt. Không bao gồm firmware, tài khoản, Wi-Fi hay dữ liệu các app khác; không sao lưu toàn bộ ánh xạ remote hoặc dữ liệu riêng của launcher. Bản launcher cũ không hỗ trợ xuất cài đặt chỉ được sao lưu APK. Giữ toàn bộ `data/backups/` khi chuyển sang máy khác.
 - **Khôi phục:** không xóa dữ liệu hoặc gỡ Free My TV trước khi restore. Công cụ kiểm tra đúng TV, kiểm tra toàn vẹn và tạo bản dự phòng trước khi khôi phục; nếu khác chữ ký APK sẽ dừng.
 - **Giao diện:** XP, Vista và macOS là các phong cách lấy cảm hứng, không cài hệ điều hành tương ứng lên TV. Gợi ý phim trên theme mặc định cần bản build có khóa TMDB riêng.
@@ -109,15 +109,19 @@ Theme **XP Widgets** được thêm riêng, giữ theme XP cổ điển. Trong *
 - **Bố cục:** cột ứng dụng bên trái, sáu cửa sổ XP cho đồng hồ, thời tiết, lịch, bóng đá, vàng và chứng khoán; thanh Start ở dưới. Dùng remote để chọn, nhấn OK xem chi tiết; Back/Menu mở danh sách app.
 - **Thời gian & lịch:** giờ Việt Nam UTC+7, lịch dương theo tháng và lịch âm Việt Nam tính trên TV (1900–2099, có tháng nhuận). Nhấn OK vào lịch để xem từng ngày âm/dương, chuyển tháng.
 - **Thời tiết:** Open-Meteo, theo thành phố và đơn vị nhiệt độ đã chọn; làm mới khoảng 30 phút. Công tắc thời tiết cũng áp dụng cho XP Widgets.
-- **Bóng đá:** Hôm nay / 7 ngày tới. Ưu tiên đội tuyển Việt Nam nam, nữ và V.League 1; tiếp theo là Ngoại hạng Anh, Champions League (C1), Serie A, La Liga và Bundesliga. Chi tiết có bộ lọc từng giải và liên kết VPF/VFF. Dữ liệu TheSportsDB, làm mới khoảng 6 giờ; tải nền có giới hạn tốc độ, lần đầu có thể mất khoảng 3 phút.
-- **Kênh phát tại Việt Nam:** ghép theo mã trận và quốc gia trong lịch kênh của TheSportsDB. Chỉ hiện khi nguồn có thông tin; không suy đoán từ đơn vị nắm bản quyền và không cung cấp luồng phát. Trận thiếu kênh ghi rõ **Chưa có thông tin kênh tại Việt Nam**. Gói miễn phí giới hạn số trận/kênh; lịch không đại diện toàn bộ trận hoặc lịch phát sóng. Đội tuyển nam/nữ còn phụ thuộc mức độ bao phủ rất hạn chế của nguồn.
+- **Bóng đá:** Hôm nay / 7 ngày tới, crawl từ [lịch Bongda24h](https://bongda24h.vn/bong-da/lich-thi-dau.html) và các phần lịch theo ngày mà chính trang này tải. Ưu tiên đội tuyển Việt Nam nam/nữ, V.League 1; tiếp theo Ngoại hạng Anh, Champions League (C1), Serie A, La Liga và Bundesliga. Có bộ lọc từng giải và liên kết lịch gốc/VPF/VFF. Làm mới khoảng 30 phút, có nút làm mới thủ công; lần tải thiếu ngày thử lại khoảng 5 phút. Không thực thi script hoặc tải hình ảnh/quảng cáo của trang.
+- **Kênh phát tại Việt Nam:** lấy nguyên tên kênh từ từng trận trên Bongda24h cùng giờ thi đấu theo Việt Nam; không cộng thêm 7 giờ và không suy đoán theo đơn vị giữ bản quyền. Thiếu kênh ghi **Chưa có thông tin kênh tại Việt Nam**. Không cung cấp luồng phát. Độ đầy đủ phụ thuộc trang nguồn; lịch đội tuyển chỉ hiện khi có trận trong dữ liệu. Nếu trang đổi cấu trúc/lỗi mạng, giữ bản lưu và báo trạng thái thay vì coi là lịch trống.
 - **Giá vàng:** vàng miếng SJC do DOJI công bố, qua feed mở taichinh.com; hiển thị mua/bán theo triệu đồng/lượng và mốc công bố riêng. Biểu đồ giá bán tích lũy các mốc thực nhận trên TV (tối đa 30 ngày/240 điểm), cần ít nhất hai mốc để vẽ; không phải lịch sử thị trường đầy đủ. Làm mới khoảng 15 phút.
 - **Chứng khoán Việt Nam:** chọn VNINDEX, VN30, FPT, VCB, HPG. Nguồn DNSE/Entrade Chart API, biểu đồ giá đóng cửa theo phiên; chỉ số tính bằng điểm, cổ phiếu nghìn đồng; phần trăm so với phiên trước trong chuỗi. Hiển thị rõ ngày phiên, không phải bảng điện trực tiếp. Làm mới khoảng 15 phút.
 - **Khi mất mạng:** giữ bản lưu nếu có và ghi trạng thái; không tạo số liệu mẫu. Đồng hồ/lịch vẫn hoạt động. Giá có thể trễ và chỉ dùng tham khảo, không phải khuyến nghị đầu tư. Lịch/kênh có thể thay đổi, nên đối chiếu đơn vị phát sóng trước giờ đấu.
 
 Ảnh XP Widgets trong kho giao diện là minh họa bố cục, dùng dấu `--` ở các mục cần dữ liệu mạng. Dữ liệu widget và đường giá tích lũy lưu cục bộ trên TV, không nằm trong gói backup tùy chọn của công cụ. Các nguồn mạng nhận kết nối thông thường từ TV; Open-Meteo nhận tọa độ thành phố đã chọn.
 
-Nguồn và tài liệu: [Open-Meteo](https://open-meteo.com/en/docs), [TheSportsDB API](https://www.thesportsdb.com/docs/api), [taichinh.com API](https://taichinh.com/api), [DNSE](https://www.dnse.com.vn/). Các endpoint có thể thay đổi hoặc giới hạn truy cập; giấy phép của dự án không cấp thêm quyền với dữ liệu của nhà cung cấp.
+Nguồn và tài liệu: [Open-Meteo](https://open-meteo.com/en/docs), [Lịch Bongda24h](https://bongda24h.vn/bong-da/lich-thi-dau.html), [taichinh.com API](https://taichinh.com/api), [DNSE](https://www.dnse.com.vn/). Các endpoint có thể thay đổi hoặc giới hạn truy cập; giấy phép của dự án không cấp thêm quyền với dữ liệu của nhà cung cấp.
+
+## Nhận diện trên launcher
+
+Tên ứng dụng, logo trong cài đặt, lựa chọn màn hình Home và nhãn dịch vụ mang thương hiệu **BBI Legend TV / BBI MEDIA**. Cuối màn hình cài đặt có một dòng ghi nguồn `github.com/simbasjungles/free-my-tv · MIT`. Giữ nguyên package/component Android để cập nhật cùng chữ ký và giữ dữ liệu; các file giấy phép và ghi công nguồn gốc vẫn có trong repo.
 
 ## Thông báo phiên bản mới
 

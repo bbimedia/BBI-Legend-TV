@@ -506,7 +506,7 @@ class Studio:
 
 def make_handler(studio, token):
     class Handler(BaseHTTPRequestHandler):
-        server_version = 'BBILegendTV/1.3'
+        server_version = 'BBILegendTV/1.3.1'
         def log_message(self, *_args):
             pass
         def valid_host(self):

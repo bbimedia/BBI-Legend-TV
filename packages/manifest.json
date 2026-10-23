@@ -1,7 +1,7 @@
 {
   "modified": true,
-  "version": "1.3-widgets",
-  "sha256": "d913eb28eebc9ac2f5cd570741c6cb8d677818ba58f221eb6d19ebff106a6019",
+  "version": "1.3.1-widgets",
+  "sha256": "6d5bba4f573381ef1dc1de1ef681648ed4120d6ff6cbb583c76301c90f959254",
   "min_sdk": 28,
   "source": "https://github.com/simbasjungles/free-my-tv",
   "themes": [

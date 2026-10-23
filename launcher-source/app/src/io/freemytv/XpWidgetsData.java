@@ -22,15 +22,16 @@ final class XpWidgetsData {
     private final List<Listener> listeners=new ArrayList<>();
     private final Map<String,JSONObject> data=new HashMap<>();
     private boolean closed;
-    XpWidgetsData(Context c){cache=c.getSharedPreferences("xp-widgets-v1",Context.MODE_PRIVATE);for(String key:new String[]{"weather","gold","stocks","football"})try{data.put(key,new JSONObject(cache.getString(key,"{}")));}catch(Exception ignored){}}
+    XpWidgetsData(Context c){cache=c.getSharedPreferences("xp-widgets-v1",Context.MODE_PRIVATE);for(String key:new String[]{"weather","gold","stocks","football"})try{{JSONObject saved=new JSONObject(cache.getString(key,"{}"));if(!key.equals("football")||saved.optInt("scope")==3)data.put(key,saved);};}catch(Exception ignored){}}
     JSONObject block(String key){JSONObject b=data.get(key);return b==null?new JSONObject():b;}
     void listen(Listener l){listeners.add(l);}
     void close(){closed=true;listeners.clear();main.removeCallbacksAndMessages(null);io.shutdownNow();}
+    void requestRefresh(){for(String key:new String[]{"weather","gold","stocks","football"}){if(pending.contains(key))continue;attempts.remove(key);try{JSONObject b=new JSONObject(block(key).toString());b.remove("fetched");data.put(key,b);}catch(Exception ignored){}}refresh();}
     void refresh(){for(String key:new String[]{"weather","gold","stocks","football"}){
         if(key.equals("weather")&&!Prefs.weather())continue;
-        long ttl=key.equals("football")?6*3600000L:key.equals("weather")?30*60000L:15*60000L;
+        long ttl=key.equals("football")?(block(key).optBoolean("partial")?5*60000L:30*60000L):key.equals("weather")?30*60000L:15*60000L;
         long now=System.currentTimeMillis(),last=Math.max(block(key).optLong("fetched"),attempts.containsKey(key)?attempts.get(key):0);
-        if(key.equals("football")&&block(key).optInt("scope")!=2)last=0;
+        if(key.equals("football")&&block(key).optInt("scope")!=3)last=0;
         if(key.equals("weather")&&!block(key).optString("place").equals(Prefs.latitude()+","+Prefs.longitude()))last=0;
         if(pending.contains(key)||(last<=now&&now-last<ttl))continue;
         pending.add(key);attempts.put(key,now);final JSONObject previous=block(key);
@@ -43,8 +44,8 @@ final class XpWidgetsData {
     }}
     static String request(String url)throws Exception{
         HttpURLConnection c=(HttpURLConnection)new URL(url).openConnection();c.setConnectTimeout(9000);c.setReadTimeout(9000);c.setRequestProperty("User-Agent","BBILegendTV/1.3");
-        try{if(c.getResponseCode()!=200)throw new IOException("Source unavailable");try(InputStream in=c.getInputStream();ByteArrayOutputStream out=new ByteArrayOutputStream()){
-            byte[] buf=new byte[8192];int n;while((n=in.read(buf))!=-1){if(out.size()+n>1500000)throw new IOException("Response too large");out.write(buf,0,n);}return new String(out.toByteArray(),StandardCharsets.UTF_8);
+        try{if(c.getResponseCode()!=200)throw new IOException("HTTP "+c.getResponseCode());try(InputStream in=c.getInputStream();ByteArrayOutputStream out=new ByteArrayOutputStream()){
+            byte[] buf=new byte[8192];int n;while((n=in.read(buf))!=-1){if(out.size()+n>(url.startsWith("https://bongda24h.vn/Schedules/AjaxSchedules?")?4000000:1500000))throw new IOException("Response too large");out.write(buf,0,n);}return new String(out.toByteArray(),StandardCharsets.UTF_8);
         }}finally{c.disconnect();}
     }
     static String date(long ms,String pattern){SimpleDateFormat f=new SimpleDateFormat(pattern,Locale.forLanguageTag("vi-VN"));f.setTimeZone(VN);return f.format(new Date(ms));}
